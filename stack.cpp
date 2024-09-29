@@ -33,6 +33,7 @@ void Stack::pop(){
     } else {
         Node* temp = top;
         top = top->next;
+        cout << "Удаленный элемент: " << temp->data << endl;
         delete temp;
     }
 }
