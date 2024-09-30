@@ -1,0 +1,162 @@
+#include <iostream>
+
+using namespace std;
+
+struct Node{
+    int data;
+    Node* next; // Указатель на следующий узел
+
+    Node(int value) : data(value), next(nullptr) {}
+};
+
+struct linkedList{
+    Node* head;
+    Node* tail;
+
+    linkedList() : head(nullptr), tail(nullptr) {}
+
+    void addToTheHead(int value); // добавление элемента в голову
+    void addToTheEnd(int value); // добавление элемента в хвост
+    void removeFromTheHead(); // удаление элемента с головы
+    void removeFromTheEnd(); // удаление элемента с хвоста
+    void removeByValue(int value); // удаление элемента по значению
+    void searchByValue(int value); // поиск элемента по значению
+    void display();
+};
+
+void linkedList::addToTheHead(int value){ // Добавление в самое начало
+    Node* newNode = new Node(value);
+    if (head == nullptr){
+        head = tail = newNode;
+    } else {
+        newNode->next = head;
+        head = newNode;
+    }
+}
+
+void linkedList::addToTheEnd(int value){
+    Node* newNode = new Node(value);
+    if (head == nullptr){
+        head = tail = newNode;
+    } else {
+        tail->next = newNode;
+        tail = newNode;
+    }
+}
+
+void linkedList::removeFromTheHead(){// удаление элемента с головы
+    if (head == nullptr){
+        cout << "Удаление невозможно: список пустой" << endl;
+        return;
+    } else{
+        Node* temp = head;
+        head = head->next;
+        delete temp;
+    }
+}
+
+void linkedList::removeFromTheEnd(){// удаление элемента с хвоста
+    if (head == nullptr){
+        cout << "Удаление невозможно: список пустой" << endl;
+        return;
+    }
+    if (head == tail){
+        delete head;
+        head = nullptr;
+        tail = nullptr;
+        return;
+    }
+    Node* current = head;
+    while (current->next != tail){ // текущий будет указывать на предпоследний узел
+        current = current->next;
+    }
+    current->next = nullptr; // обнуляем указатель на последний элемент
+    // те разрываем связь с последним узлом
+    delete tail; // удаляем последний узел
+    tail = current; // конец теперь указывает на последний элемент, предпоследний узел
+}
+
+void linkedList::removeByValue(int value){ // удаление элемента по значению
+    if (head == nullptr){
+        cout << "Невозможно удалить элемент: список пуст" << endl;
+        return;
+    }
+    if (value == head->data){
+        removeFromTheHead();
+        return;
+    }
+    if (value == tail->data){
+        removeFromTheEnd();
+        return;
+    }
+    Node* current = head;
+    while (current->next && current->next->data != value){ // Пока вообще можем идти по списку
+    // и пока значение не будет равно нужному
+        current = current->next;
+    }
+    if (current->next == nullptr){
+        cout << "Такого значения нет в списке" << endl;
+        return;
+    }
+    Node* temp = current->next;
+    current->next = temp->next; // Обновляем указатель на следующий элемент
+    delete temp; // Удаляем узел
+}
+
+void linkedList::searchByValue(int value){ // поиск элемента по значению
+    Node* current = head;
+    while (current->next && current->data != value) {
+        current = current->next;
+    }
+    if (current->data == value){
+        cout << "Значение " << current->data << " существует в списке" << endl;
+    } else {
+        cout << "Такого элемента " << current->data << " нет в списке" << endl;
+    }
+}
+
+void linkedList::display(){
+    Node* current = head;
+    while (current != nullptr) {
+        cout << current->data << " ";
+        current = current->next;
+    }
+    cout << endl;
+}
+
+int main() {
+    linkedList list;
+
+    // Добавление элементов в список
+    list.addToTheEnd(10);
+    list.addToTheEnd(20);
+    list.addToTheEnd(30);
+    list.addToTheHead(5);
+
+    // Отображение списка
+    cout << "Список после добавления элементов: ";
+    list.display();
+
+    // Поиск элемента
+    list.searchByValue(20);
+    list.searchByValue(5);
+
+    // Удаление элемента с головы
+    list.removeFromTheHead();
+    cout << "Список после удаления головы: ";
+    list.display();
+
+    // Удаление элемента с хвоста
+    list.removeFromTheEnd();
+    cout << "Список после удаления хвоста: ";
+    list.display();
+
+    // Удаление элемента по значению
+    list.removeByValue(20);
+    cout << "Список после удаления элемента 20: ";
+    list.display();
+
+    list.removeByValue(40); // Пытаемся удалить несуществующий элемент
+
+    return 0;
+}
