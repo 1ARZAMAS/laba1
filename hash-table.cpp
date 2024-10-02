@@ -100,23 +100,3 @@ void HashTable::pop(const string& key) { // Функция удаления
     }
     cout << "Такого элемента нет в таблице" << endl;
 }
-
-
-// int main(){
-//     HashTable table;
-//     table.push("key1", 1);
-//     table.push("key2", 2);
-//     table.push("key3", 3);//заполнение
-
-//     table.search("key2");//поиск значения по ключу
-//     table.push("key2", 10);//если ввели одинаковый ключ - то перезаписываем
-//     table.search("key2");
-
-//     table.search("key1");  // 1
-//     table.search("key4");  // 0
-//     table.pop("key2");//удаление 
-//     table.search("key2");  // 0
-//     table.push("1key", 50);
-//     table.search("1key");  // 0
-
-// }

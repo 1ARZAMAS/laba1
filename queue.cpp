@@ -38,27 +38,3 @@ void Queue::display(){
         cout << endl;
     }
 }
-
-// int main(){
-//     system("chcp 65001");
-//     Queue queue;
-
-//     queue.push(10);
-//     queue.display();
-
-//     queue.push(20);
-//     queue.display();
-
-//     queue.push(30);
-//     queue.display();
-
-//     queue.pop();
-//     queue.display();
-
-//     queue.pop();
-//     queue.display();
-
-//     queue.pop();
-//     queue.display();
-//     return 0;
-// }

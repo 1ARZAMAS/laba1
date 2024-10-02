@@ -35,29 +35,3 @@ void Stack::display(){
         cout << endl;
     }
 }
-
-// int main(){
-//     system("chcp 65001");
-//     Stack stack;
-
-//     stack.push(10);
-//     stack.display();
-
-//     stack.push(20);
-//     stack.display();
-
-//     stack.push(30);
-//     stack.display();
-
-//     stack.pop();
-//     stack.display();
-
-//     stack.pop();
-//     stack.display();
-
-//     stack.pop();
-//     stack.display();
-//     stack.pop(); // Проверка на пустой стек
-
-//     return 0;
-// }

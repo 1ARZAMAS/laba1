@@ -133,26 +133,3 @@ void AVLTree::inOrder(Node2* node) {// симметричный обход
         inOrder(node->right);
     }
 }
-
-// int main() {
-//     system("chcp 65001");
-//     AVLTree tree;
-
-//     tree.root = tree.insert(tree.root, 10);
-//     tree.root = tree.insert(tree.root, 20);
-//     tree.root = tree.insert(tree.root, 30);
-//     tree.root = tree.insert(tree.root, 40);
-//     tree.root = tree.insert(tree.root, 50);
-//     tree.root = tree.insert(tree.root, 25);
-
-//     cout << "Симметричный обход: ";
-//     tree.inOrder(tree.root);
-//     cout << endl;
-
-//     tree.root = tree.remove(tree.root, 30);
-//     cout << "После удаления 30, симметричный обход: ";
-//     tree.inOrder(tree.root);
-//     cout << endl;
-
-//     return 0;
-// }
