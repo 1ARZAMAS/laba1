@@ -1,28 +1,14 @@
-#include <iostream>
+#include "header.h"
+#include "node.h"
 
-using namespace std;
+// struct Node{
+//     int data;
+//     Node* next; // Указатель на следующий узел
 
-struct Node{
-    int data;
-    Node* next; // Указатель на следующий узел
+//     Node(int value) : data(value), next(nullptr) {}
+// };
 
-    Node(int value) : data(value), next(nullptr) {}
-};
 
-struct linkedList{
-    Node* head;
-    Node* tail;
-
-    linkedList() : head(nullptr), tail(nullptr) {}
-
-    void addToTheHead(int value); // добавление элемента в голову
-    void addToTheEnd(int value); // добавление элемента в хвост
-    void removeFromTheHead(); // удаление элемента с головы
-    void removeFromTheEnd(); // удаление элемента с хвоста
-    void removeByValue(int value); // удаление элемента по значению
-    void searchByValue(int value); // поиск элемента по значению
-    void display();
-};
 
 void linkedList::addToTheHead(int value){ // Добавление в самое начало
     Node* newNode = new Node(value);
@@ -124,39 +110,39 @@ void linkedList::display(){
     cout << endl;
 }
 
-int main() {
-    linkedList list;
+// int main() {
+//     linkedList list;
 
-    // Добавление элементов в список
-    list.addToTheEnd(10);
-    list.addToTheEnd(20);
-    list.addToTheEnd(30);
-    list.addToTheHead(5);
+//     // Добавление элементов в список
+//     list.addToTheEnd(10);
+//     list.addToTheEnd(20);
+//     list.addToTheEnd(30);
+//     list.addToTheHead(5);
 
-    // Отображение списка
-    cout << "Список после добавления элементов: ";
-    list.display();
+//     // Отображение списка
+//     cout << "Список после добавления элементов: ";
+//     list.display();
 
-    // Поиск элемента
-    list.searchByValue(20);
-    list.searchByValue(5);
+//     // Поиск элемента
+//     list.searchByValue(20);
+//     list.searchByValue(5);
 
-    // Удаление элемента с головы
-    list.removeFromTheHead();
-    cout << "Список после удаления головы: ";
-    list.display();
+//     // Удаление элемента с головы
+//     list.removeFromTheHead();
+//     cout << "Список после удаления головы: ";
+//     list.display();
 
-    // Удаление элемента с хвоста
-    list.removeFromTheEnd();
-    cout << "Список после удаления хвоста: ";
-    list.display();
+//     // Удаление элемента с хвоста
+//     list.removeFromTheEnd();
+//     cout << "Список после удаления хвоста: ";
+//     list.display();
 
-    // Удаление элемента по значению
-    list.removeByValue(20);
-    cout << "Список после удаления элемента 20: ";
-    list.display();
+//     // Удаление элемента по значению
+//     list.removeByValue(20);
+//     cout << "Список после удаления элемента 20: ";
+//     list.display();
 
-    list.removeByValue(40); // Пытаемся удалить несуществующий элемент
+//     list.removeByValue(40); // Пытаемся удалить несуществующий элемент
 
-    return 0;
-}
+//     return 0;
+// }

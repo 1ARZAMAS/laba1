@@ -1,7 +1,6 @@
-#include <iostream>
-using namespace std;
-
-struct Node {
+#include "header.h"
+//#include "node.h"
+struct Node2 {
     int key; // значение узла
     Node* left; // указатели на левые и правые дочерние узлы
     Node* right;
@@ -10,23 +9,7 @@ struct Node {
     Node(int value) : key(value), left(nullptr), right(nullptr), height(1) {}
 };
 
-struct AVLTree {
-    Node* root;
 
-    AVLTree() : root(nullptr) {}
-
-    int height(Node* node); // высота узла
-    int balanceFactor(Node* node); // вычисляет баланс
-    void updateHeight(Node* node); // обновляет высоту дерева на основе дочерних узлов
-    Node* rotateRight(Node* y); // правый поворот для балансировки дерева
-    Node* rotateLeft(Node* x); // левый поворот для балансировки дерева
-    Node* balance(Node* node); // проверяет баланс и выполняет повороты, если нужно
-    Node* insert(Node* node, int key); // вставляем узел в дерево и балансируем
-    Node* minValueNode(Node* node); // находим самый левый узел (минимальное значение)
-    Node* remove(Node* node, int key); // удаляем узел и балансируем
-    bool search(Node* node, int key); // проверяем есть ли узел в дереве с нужным значением
-    void inOrder(Node* node); // симметричный обход
-};
 
 int AVLTree::height(Node* node) { // высота узла
     if (node){// возвращает высоту узла 0, если узел пуст
@@ -161,25 +144,25 @@ void AVLTree::inOrder(Node* node) {// симметричный обход
     }
 }
 
-int main() {
-    system("chcp 65001");
-    AVLTree tree;
+// int main() {
+//     system("chcp 65001");
+//     AVLTree tree;
 
-    tree.root = tree.insert(tree.root, 10);
-    tree.root = tree.insert(tree.root, 20);
-    tree.root = tree.insert(tree.root, 30);
-    tree.root = tree.insert(tree.root, 40);
-    tree.root = tree.insert(tree.root, 50);
-    tree.root = tree.insert(tree.root, 25);
+//     tree.root = tree.insert(tree.root, 10);
+//     tree.root = tree.insert(tree.root, 20);
+//     tree.root = tree.insert(tree.root, 30);
+//     tree.root = tree.insert(tree.root, 40);
+//     tree.root = tree.insert(tree.root, 50);
+//     tree.root = tree.insert(tree.root, 25);
 
-    cout << "Симметричный обход: ";
-    tree.inOrder(tree.root);
-    cout << endl;
+//     cout << "Симметричный обход: ";
+//     tree.inOrder(tree.root);
+//     cout << endl;
 
-    tree.root = tree.remove(tree.root, 30);
-    cout << "После удаления 30, симметричный обход: ";
-    tree.inOrder(tree.root);
-    cout << endl;
+//     tree.root = tree.remove(tree.root, 30);
+//     cout << "После удаления 30, симметричный обход: ";
+//     tree.inOrder(tree.root);
+//     cout << endl;
 
-    return 0;
-}
+//     return 0;
+// }

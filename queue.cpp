@@ -1,23 +1,11 @@
-#include <iostream>
+#include "header.h"
+#include "node.h"
+// struct Node{
+//     int data;
+//     Node* next;
+// };
 
-using namespace std;
 
-struct Node{
-    int data;
-    Node* next;
-};
-
-struct Queue{
-    Node* head;
-    Node* tail;
-    Queue(){
-        head = nullptr;
-        tail = nullptr;
-    }
-    void push(int value); //добавление
-    void pop(); //удаление
-    void display(); //вывод на экран
-};
 
 void Queue::push(int value){
     Node* node = new Node {value, nullptr};
@@ -57,26 +45,26 @@ void Queue::display(){
     }
 }
 
-int main(){
-    system("chcp 65001");
-    Queue queue;
+// int main(){
+//     system("chcp 65001");
+//     Queue queue;
 
-    queue.push(10);
-    queue.display();
+//     queue.push(10);
+//     queue.display();
 
-    queue.push(20);
-    queue.display();
+//     queue.push(20);
+//     queue.display();
 
-    queue.push(30);
-    queue.display();
+//     queue.push(30);
+//     queue.display();
 
-    queue.pop();
-    queue.display();
+//     queue.pop();
+//     queue.display();
 
-    queue.pop();
-    queue.display();
+//     queue.pop();
+//     queue.display();
 
-    queue.pop();
-    queue.display();
-    return 0;
-}
+//     queue.pop();
+//     queue.display();
+//     return 0;
+// }

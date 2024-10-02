@@ -1,32 +1,15 @@
-#include <iostream>
-#include <string>
+#include "header.h"
+#include "node.h"
 
-using namespace std;
+// struct Node {
+//     int data;
+//     Node* next;
+//     Node(int val) : data(val), next(nullptr) {}
+//     // инициализируем дата значением вал, новый узел не указывает на следующий элемент, а
+//     // указывает на нулевой (он последний на данный момент)
+// };
 
-struct Node {
-    int data;
-    Node* next;
-    Node(int val) : data(val), next(nullptr) {}
-    // инициализируем дата значением вал, новый узел не указывает на следующий элемент, а
-    // указывает на нулевой (он последний на данный момент)
-};
 
-struct Array {
-    Node* head; // указываем на первый узел
-    int size; //текущий размер списка
-    int capacity; // максимальная вместимость массива
-
-    Array(int max) : head(nullptr), size(0), capacity(max) {}
-    // инициализируем head с nullptr, размер нулевой и максимальное значение массива
-
-    void add(int index, int value);
-    void addToTheEnd(int value);
-    int get(int index);
-    void remove(int index);
-    void replace(int index, int value);
-    int length();
-    void display();
-};
 
 void Array::add(int index, int value) {
     if (index < 0 || index > size || size >= capacity) {
@@ -115,32 +98,32 @@ void Array::display() {
     cout << endl;
 }
 
-int main() {
-    system("chcp 65001");
-    Array arr(5); // Максимальный размер 5
+// int main() {
+//     system("chcp 65001");
+//     Array arr(5); // Максимальный размер 5
 
-    arr.addToTheEnd(10);
-    arr.addToTheEnd(20);
-    arr.add(1, 15);
-    arr.display(); // вывод: 10 15 20
+//     arr.addToTheEnd(10);
+//     arr.addToTheEnd(20);
+//     arr.add(1, 15);
+//     arr.display(); // вывод: 10 15 20
 
-    arr.replace(1, 12);
-    arr.display(); // вывод: 10 12 20
+//     arr.replace(1, 12);
+//     arr.display(); // вывод: 10 12 20
 
-    arr.remove(0);
-    arr.display(); // вывод: 12 20
+//     arr.remove(0);
+//     arr.display(); // вывод: 12 20
 
-    cout << "Элемент по индексу 0: " << arr.get(0) << "\n"; // вывод: 12
-    cout << "Длина массива: " << arr.length() << "\n"; // вывод: 2
+//     cout << "Элемент по индексу 0: " << arr.get(0) << "\n"; // вывод: 12
+//     cout << "Длина массива: " << arr.length() << "\n"; // вывод: 2
 
-    // Попробуем добавить больше элементов, чем максимальный размер
-    arr.addToTheEnd(30);
-    arr.display();
-    arr.addToTheEnd(40);
-    arr.display();
-    arr.addToTheEnd(50);
-    arr.display();
-    arr.addToTheEnd(60); // Это должно вызвать сообщение об ошибке
+//     // Попробуем добавить больше элементов, чем максимальный размер
+//     arr.addToTheEnd(30);
+//     arr.display();
+//     arr.addToTheEnd(40);
+//     arr.display();
+//     arr.addToTheEnd(50);
+//     arr.display();
+//     arr.addToTheEnd(60); // Это должно вызвать сообщение об ошибке
 
-    return 0;
-}
+//     return 0;
+// }

@@ -1,18 +1,17 @@
-#include <iostream>
-
-using namespace std;
+#include "header.h"
+#include "node.h"
 
 const int SIZE = 500;
 
-struct Node {
-    string data;
-    Node* next;
-    Node* prev;
+// struct Node {
+//     string data;
+//     Node* next;
+//     Node* prev;
 
-    Node(const string& value, Node* nextNode = nullptr, Node* prevNode = nullptr)
-        : data(value), next(nextNode), prev(prevNode) {
-    }
-};
+//     Node(const string& value, Node* nextNode = nullptr, Node* prevNode = nullptr)
+//         : data(value), next(nextNode), prev(prevNode) {
+//     }
+// };
 
 struct HashTableItem {
     string key;
@@ -137,21 +136,21 @@ void HashTable::pop(const string& key) { // Функция удаления
 }
 
 
-int main(){
-    HashTable table;
-    table.push("key1", 1);
-    table.push("key2", 2);
-    table.push("key3", 3);//заполнение
+// int main(){
+//     HashTable table;
+//     table.push("key1", 1);
+//     table.push("key2", 2);
+//     table.push("key3", 3);//заполнение
 
-    table.search("key2");//поиск значения по ключу
-    table.push("key2", 10);//если ввели одинаковый ключ - то перезаписываем
-    table.search("key2");
+//     table.search("key2");//поиск значения по ключу
+//     table.push("key2", 10);//если ввели одинаковый ключ - то перезаписываем
+//     table.search("key2");
 
-    table.search("key1");  // 1
-    table.search("key4");  // 0
-    table.pop("key2");//удаление 
-    table.search("key2");  // 0
-    table.push("1key", 50);
-    table.search("1key");  // 0
+//     table.search("key1");  // 1
+//     table.search("key4");  // 0
+//     table.pop("key2");//удаление 
+//     table.search("key2");  // 0
+//     table.push("1key", 50);
+//     table.search("1key");  // 0
 
-}
+// }

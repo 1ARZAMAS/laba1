@@ -1,21 +1,11 @@
-#include <iostream>
+#include "header.h"
+#include "node.h"
+// struct Node{
+//     int data;
+//     Node* next;
+// };
 
-using namespace std;
 
-struct Node{
-    int data;
-    Node* next;
-};
-
-struct Stack {
-    Node* top;
-    Stack(){
-        top = nullptr;
-    }
-    void push(int value); //добавление
-    void pop(); //удаление
-    void display(); //вывод стека
-};
 
 void Stack::push(int value){
     Node* node = new Node{value, nullptr};
@@ -52,28 +42,28 @@ void Stack::display(){
     }
 }
 
-int main(){
-    system("chcp 65001");
-    Stack stack;
+// int main(){
+//     system("chcp 65001");
+//     Stack stack;
 
-    stack.push(10);
-    stack.display();
+//     stack.push(10);
+//     stack.display();
 
-    stack.push(20);
-    stack.display();
+//     stack.push(20);
+//     stack.display();
 
-    stack.push(30);
-    stack.display();
+//     stack.push(30);
+//     stack.display();
 
-    stack.pop();
-    stack.display();
+//     stack.pop();
+//     stack.display();
 
-    stack.pop();
-    stack.display();
+//     stack.pop();
+//     stack.display();
 
-    stack.pop();
-    stack.display();
-    stack.pop(); // Проверка на пустой стек
+//     stack.pop();
+//     stack.display();
+//     stack.pop(); // Проверка на пустой стек
 
-    return 0;
-}
+//     return 0;
+// }
