@@ -1,6 +1,5 @@
 #include "header.h"
 
-
 int main(){
     system("chcp 65001");
     Array arr(5); // Максимальный размер 5

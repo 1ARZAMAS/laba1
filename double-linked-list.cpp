@@ -1,16 +1,6 @@
 #include "header.h"
 #include "node.h"
 
-// struct Node{
-//     int data;
-//     Node* next; // Указатель на следующий узел
-//     Node* prev; // Указатель на предыдущий узел
-
-//     Node(int value) : data(value), next(nullptr), prev(nullptr) {}
-// };
-
-
-
 void doubleLinkedList::addToTheHead(int value){ // Добавление в самое начало
     Node* newNode = new Node(value);
     if (head == nullptr){

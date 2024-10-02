@@ -1,15 +1,6 @@
 #include "header.h"
 #include "node.h"
 
-// struct Node{
-//     int data;
-//     Node* next; // Указатель на следующий узел
-
-//     Node(int value) : data(value), next(nullptr) {}
-// };
-
-
-
 void linkedList::addToTheHead(int value){ // Добавление в самое начало
     Node* newNode = new Node(value);
     if (head == nullptr){

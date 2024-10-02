@@ -1,16 +1,6 @@
 #include "header.h"
 #include "node.h"
 
-// struct Node {
-//     int data;
-//     Node* next;
-//     Node(int val) : data(val), next(nullptr) {}
-//     // инициализируем дата значением вал, новый узел не указывает на следующий элемент, а
-//     // указывает на нулевой (он последний на данный момент)
-// };
-
-
-
 void Array::add(int index, int value) {
     if (index < 0 || index > size || size >= capacity) {
         cout << "Невозможно добавить элемент. Ошибка индекса или превышен максимальный размер." << endl;

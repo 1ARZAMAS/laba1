@@ -1,11 +1,5 @@
 #include "header.h"
 #include "node.h"
-// struct Node{
-//     int data;
-//     Node* next;
-// };
-
-
 
 void Queue::push(int value){
     Node* node = new Node {value, nullptr};
