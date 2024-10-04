@@ -1,7 +1,7 @@
 #include "header.h"
 #include "node.h"
 
-int HashTable::HashFun(const string& key) {//хэш функция
+int HashTable::HashFun(const std::string& key) {//хэш функция
     const int prime = 43; // простое число
     int hash = 0;
     for (char letter : key) {
@@ -10,11 +10,11 @@ int HashTable::HashFun(const string& key) {//хэш функция
     return hash;
 }
 
-HashTableItem* HashTable::createItem(const string& key, int data) {//создание элемента таблицы
+HashTableItem* HashTable::createItem(const std::string& key, std::string data) {//создание элемента таблицы
     return new HashTableItem{ key, data, NULL };
 }
 
-void HashTable::push(const string& key, int data) {
+void HashTable::push(const std::string& key, std::string data) {
     if (count >= SIZE) {
         cout << "Table is full" << endl;
         return;
@@ -40,26 +40,28 @@ void HashTable::push(const string& key, int data) {
     }
 }
 
-void HashTable::search(const string& key) {
-    if (count == 0) {
+void HashTable::get(const std::string& value) {
+    if (count == 0) { // Проверка на пустоту
         cout << "Table is empty" << endl;
         return;
     }
 
-    int index = HashFun(key);
-    HashTableItem* current = items[index];
-    while (current != NULL) {
-        if (current->key == key) {
-            cout << "такой элемент существует" << current->data << endl; // Найден элемент с указанным ключом
-            return;
+    for (int i = 0; i < SIZE; i++) {
+        HashTableItem* current = items[i];
+        while (current != nullptr) {
+            if (current->data == value) {
+                cout << "Найдено значение: " << current->data << " по ключу: " << current->key << endl; // Если нужно вывести ключ
+                return; // Если найдено, выходим из функции
+            }
+            current = current->next;
         }
-        current = current->next;
     }
 
-    cout << "Такого элемента не существует" << endl; // Элемент не найден
+    cout << "Значение не найдено" << endl; // Если значение не найдено
 }
 
-void HashTable::pop(const string& key) { // Функция удаления
+
+void HashTable::pop(const std::string& key) { // Функция удаления
 
     if (count == 0) { // Если таблица пустая, ничего не делаем
         return;

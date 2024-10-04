@@ -63,7 +63,7 @@ Node2* AVLTree::balance(Node2* node) {// проверяет баланс и вы
     return node;
 }
 
-Node2* AVLTree::insert(Node2* node, int key) {// вставляем узел в дерево и балансируем
+Node2* AVLTree::insert(Node2* node, std::string key) {// вставляем узел в дерево и балансируем
     if (!node) { // если узел пустой, то создаем новый
         return new Node2(key);
     }
@@ -85,7 +85,7 @@ Node2* AVLTree::minValueNode(Node2* node) {// находим самый левы
     return current;
 }
 
-Node2* AVLTree::remove(Node2* node, int key) {// удаляем узел и балансируем
+Node2* AVLTree::remove(Node2* node, std::string key) {// удаляем узел и балансируем
     if (!node) {
         return node; // если узел пустой, то ничего не делаем
     }
@@ -112,7 +112,7 @@ Node2* AVLTree::remove(Node2* node, int key) {// удаляем узел и ба
     return balance(node); //балансируем
 }
 
-bool AVLTree::search(Node2* node, int key) {// проверяем есть ли узел в дереве с нужным значением
+bool AVLTree::search(Node2* node, std::string key) {// проверяем есть ли узел в дереве с нужным значением
     if (!node){
         return false;
     } 

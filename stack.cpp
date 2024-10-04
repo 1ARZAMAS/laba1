@@ -1,8 +1,8 @@
 #include "header.h"
 #include "node.h"
 
-void Stack::push(int value){
-    Node* node = new Node{value, nullptr};
+void Stack::push(std::string value){
+    Node* node = new Node(value);
     if (top == nullptr){ // если стек пустой
         top = node; // то top = введеное значение
     } else {

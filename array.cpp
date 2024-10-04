@@ -1,7 +1,7 @@
 #include "header.h"
 #include "node.h"
 
-void Array::add(int index, int value) {
+void Array::add(int index, std::string value) {
     if (index < 0 || index > size || size >= capacity) {
         cout << "Невозможно добавить элемент. Ошибка индекса или превышен максимальный размер." << endl;
         return;
@@ -23,14 +23,14 @@ void Array::add(int index, int value) {
     size++;
 }
 
-void Array::addToTheEnd(int value) { // вызываем предыдущую функцию и как параметр указываем 
+void Array::addToTheEnd(std::string value) { // вызываем предыдущую функцию и как параметр указываем 
     add(size, value); //текущий размер массива, чтобы добавить в конец
 }
 
-int Array::get(int index) {
+string Array::get(int index) {
     if (index < 0 || index >= size) {
         cout << "Неверный индекс!" << endl;
-        return -1; // Возвращаем -1 в случае ошибки
+        return "";
     }
     Node* current = head;
     for (int i = 0; i < index; i++) { // проходимся до нужного индекса
@@ -63,7 +63,7 @@ void Array::remove(int index) {
     size--;
 }
 
-void Array::replace(int index, int value) {
+void Array::replace(int index, std::string value) {
     if (index < 0 || index >= size) {
         cout << "Неверный индекс!" << endl;
         return;

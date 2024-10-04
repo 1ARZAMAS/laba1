@@ -1,21 +1,22 @@
 #pragma once
 #include <iostream>
+#include <string>
 
 struct Node {
-    int data;
+    std::string data;
     Node* next;
     Node* prev;
 
-    Node(const int& value, Node* nextNode = nullptr, Node* prevNode = nullptr)
+    Node(const std::string& value, Node* nextNode = nullptr, Node* prevNode = nullptr)
         : data(value), next(nextNode), prev(prevNode) {
     }
 };
 
 struct Node2 {
-    int key; // значение узла
+    std::string key; // значение узла
     Node2* left; // указатели на левые и правые дочерние узлы
     Node2* right;
     int height; // высота узла
     // инициализируем дерево
-    Node2(int value) : key(value), left(nullptr), right(nullptr), height(1) {}
+    Node2(std::string value) : key(value), left(nullptr), right(nullptr), height(1) {}
 };

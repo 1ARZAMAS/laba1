@@ -8,31 +8,33 @@ struct Array {
     Node* head; // указываем на первый узел
     int size; //текущий размер списка
     int capacity; // максимальная вместимость массива
+    
+    Array() : head(nullptr), size(0), capacity(0) {}
 
     Array(int max) : head(nullptr), size(0), capacity(max) {}
     // инициализируем head с nullptr, размер нулевой и максимальное значение массива
 
-    void add(int index, int value);
-    void addToTheEnd(int value);
-    int get(int index);
+    void add(int index, std::string value);
+    void addToTheEnd(std::string value);
+    std::string get(int index);
     void remove(int index);
-    void replace(int index, int value);
+    void replace(int index, std::string value);
     int length();
     void display();
 };
 
-struct doubleLinkedList{
+struct DoubleLinkedList{
     Node* head;
     Node* tail;
 
-    doubleLinkedList() : head(nullptr), tail(nullptr) {}
+    DoubleLinkedList() : head(nullptr), tail(nullptr) {}
 
-    void addToTheHead(int value); // добавление элемента в голову
-    void addToTheEnd(int value); // добавление элемента в хвост
+    void addToTheHead(std::string value); // добавление элемента в голову
+    void addToTheEnd(std::string value); // добавление элемента в хвост
     void removeFromTheHead(); // удаление элемента с головы
     void removeFromTheEnd(); // удаление элемента с хвоста
-    void removeByValue(int value); // удаление элемента по значению
-    void searchByValue(int value); // поиск элемента по значению
+    void removeByValue(std::string value); // удаление элемента по значению
+    bool searchByValue(std::string value); // поиск элемента по значению
     void display();
 };
 
@@ -42,12 +44,12 @@ struct linkedList{
 
     linkedList() : head(nullptr), tail(nullptr) {}
 
-    void addToTheHead(int value); // добавление элемента в голову
-    void addToTheEnd(int value); // добавление элемента в хвост
+    void addToTheHead(std::string value); // добавление элемента в голову
+    void addToTheEnd(std::string value); // добавление элемента в хвост
     void removeFromTheHead(); // удаление элемента с головы
     void removeFromTheEnd(); // удаление элемента с хвоста
-    void removeByValue(int value); // удаление элемента по значению
-    void searchByValue(int value); // поиск элемента по значению
+    void removeByValue(std::string value); // удаление элемента по значению
+    void searchByValue(std::string value); // поиск элемента по значению
     void display();
 };
 
@@ -58,7 +60,7 @@ struct Queue{
         head = nullptr;
         tail = nullptr;
     }
-    void push(int value); //добавление
+    void push(std::string value); //добавление
     void pop(); //удаление
     void display(); //вывод на экран
 };
@@ -68,13 +70,13 @@ struct Stack {
     Stack(){
         top = nullptr;
     }
-    void push(int value); //добавление
+    void push(std::string value); //добавление
     void pop(); //удаление
     void display(); //вывод стека
 };
 
 struct AVLTree {
-    Node2* root;
+    Node2* root; // Указатель на корень дерева
 
     AVLTree() : root(nullptr) {}
 
@@ -84,18 +86,18 @@ struct AVLTree {
     Node2* rotateRight(Node2* y); // правый поворот для балансировки дерева
     Node2* rotateLeft(Node2* x); // левый поворот для балансировки дерева
     Node2* balance(Node2* node); // проверяет баланс и выполняет повороты, если нужно
-    Node2* insert(Node2* node, int key); // вставляем узел в дерево и балансируем
+    Node2* insert(Node2* node, std::string key); // вставляем узел в дерево и балансируем
     Node2* minValueNode(Node2* node); // находим самый левый узел (минимальное значение)
-    Node2* remove(Node2* node, int key); // удаляем узел и балансируем
-    bool search(Node2* node, int key); // проверяем есть ли узел в дереве с нужным значением
+    Node2* remove(Node2* node, std::string key); // удаляем узел и балансируем
+    bool search(Node2* node, std::string key); // проверяем есть ли узел в дереве с нужным значением
     void inOrder(Node2* node); // симметричный обход
 };
 
 const int SIZE = 500;
 
 struct HashTableItem {
-    string key;
-    int data;
+    std::string key;
+    std::string data;
     HashTableItem* next; // Указатель на следующий элемент в цепочке
 };
 
@@ -108,9 +110,9 @@ struct HashTable {
             items[i] = nullptr;
         }
     }
-    int HashFun(const string& key);
-    HashTableItem* createItem(const string& key, int data);
-    void push(const string& key, int data);
-    void search(const string& key);
-    void pop(const string& key);
+    int HashFun(const std::string& key);
+    HashTableItem* createItem(const std::string& key, std::string data);
+    void push(const std::string& key, std::string data);
+    void get(const std::string& key);
+    void pop(const std::string& key);
 };

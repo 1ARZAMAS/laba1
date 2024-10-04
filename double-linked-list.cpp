@@ -1,7 +1,7 @@
 #include "header.h"
 #include "node.h"
 
-void doubleLinkedList::addToTheHead(int value){ // Добавление в самое начало
+void DoubleLinkedList::addToTheHead(std::string value){ // Добавление в самое начало
     Node* newNode = new Node(value);
     if (head == nullptr){
         head = tail = newNode;
@@ -12,7 +12,7 @@ void doubleLinkedList::addToTheHead(int value){ // Добавление в са�
     }
 }
 
-void doubleLinkedList::addToTheEnd(int value){
+void DoubleLinkedList::addToTheEnd(std::string value){
     Node* newNode = new Node(value);
     if (head == nullptr){
         head = tail = newNode;
@@ -23,7 +23,7 @@ void doubleLinkedList::addToTheEnd(int value){
     }
 }
 
-void doubleLinkedList::removeFromTheHead(){// удаление элемента с головы
+void DoubleLinkedList::removeFromTheHead(){// удаление элемента с головы
     if (head == nullptr){
         cout << "Удаление невозможно: список пустой" << endl;
         return;
@@ -35,7 +35,7 @@ void doubleLinkedList::removeFromTheHead(){// удаление элемента 
     }
 }
 
-void doubleLinkedList::removeFromTheEnd(){// удаление элемента с хвоста
+void DoubleLinkedList::removeFromTheEnd(){// удаление элемента с хвоста
     if (head == nullptr){
         cout << "Удаление невозможно: список пустой" << endl;
         return;
@@ -53,7 +53,7 @@ void doubleLinkedList::removeFromTheEnd(){// удаление элемента �
     delete current;
 }
 
-void doubleLinkedList::removeByValue(int value){ // удаление элемента по значению
+void DoubleLinkedList::removeByValue(std::string value){ // удаление элемента по значению
     if (head == nullptr){
         cout << "Невозможно удалить элемент: список пуст" << endl;
         return;
@@ -91,19 +91,21 @@ void doubleLinkedList::removeByValue(int value){ // удаление элеме�
     delete current; // и удаляем текущий
 }
 
-void doubleLinkedList::searchByValue(int value){ // поиск элемента по значению
+bool DoubleLinkedList::searchByValue(std::string value){ // поиск элемента по значению
     Node* current = head;
     while (current->next && current->data != value) {
         current = current->next;
     }
     if (current->data == value){
         cout << "Значение " << current->data << " существует в списке" << endl;
+        return true;
     } else {
         cout << "Такого элемента " << current->data << " нет в списке" << endl;
+        return false;
     }
 }
 
-void doubleLinkedList::display(){
+void DoubleLinkedList::display(){
     Node* current = head;
     while (current != nullptr) {
         cout << current->data << " ";
