@@ -1,6 +1,4 @@
 #pragma once
-#include <iostream>
-#include <string>
 
 struct Node {
     std::string data;

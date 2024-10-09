@@ -1,4 +1,8 @@
 #include <iostream>
+#include <fstream>
+#include <sstream>
+#include <map>
+#include <string>
 #include "node.h"
 #pragma once
 
@@ -116,3 +120,9 @@ struct HashTable {
     void get(const std::string& key);
     void pop(const std::string& key);
 };
+
+void processQuery(const std::string& query);
+// Загрузка данных из файла
+void loadFromFile(const std::string& filename);
+
+void saveToFile(const std::string& filename);
