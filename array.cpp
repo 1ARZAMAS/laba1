@@ -146,10 +146,10 @@ void saveToFile(const std::string& filename) {
     }
 
     Node* current = Array.head;
-     while (current != nullptr){
-            file << current->data << endl;
-            current = current->next;
-        }
+    while (current != nullptr){
+        file << current->data << endl;
+        current = current->next;
+    }
 
     file.close();
     const_cast<Array*>(this)->size = 0; // очистка массива
