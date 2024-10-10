@@ -27,11 +27,17 @@ void DoubleLinkedList::removeFromTheHead(){// удаление элемента 
     if (head == nullptr){
         cout << "Удаление невозможно: список пустой" << endl;
         return;
-    } else{
+    } else {
         Node* temp = head;
         head->next->prev = nullptr;
         head = head->next;//удаляем первый элемент
         delete temp;
+    }
+}
+
+void DoubleLinkedList::clear(){
+    while(head){
+        removeFromTheHead();
     }
 }
 
@@ -112,4 +118,35 @@ void DoubleLinkedList::display(){
         current = current->next;
     }
     cout << endl;
+}
+
+void loadFromFile(const std::string& filename) { // загрузка данных из файла
+    clear(); // очищаем текущий лист
+    ifstream file(filename);
+    if (!file) {
+        cout << "Ошибка открытия файла: " << filename << endl;
+        return;
+    }
+
+    std::string line;
+    while (getline(file, line)) {
+        addToTheEnd(line); // добавляем элементы
+    }
+    file.close();
+}
+
+void saveToFile(const std::string& filename) { // сохранение в файл
+    ifstream file(filename);
+    if (!file) {
+        cout << "Ошибка открытия файла: " << filename << endl;
+        return;
+    }
+
+    Node* current = DoubleLinkedList.head;
+    while (current) {
+        file << current->item << endl; // записываем данные в файл
+        current = current->next;
+    }
+    file.close();
+    const_cast<DoubleLinkedList*>(this)->clear();
 }
