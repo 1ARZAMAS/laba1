@@ -8,31 +8,38 @@
 
 using namespace std;
 
-struct Array {
+struct Array { // done
     Node* head; // указываем на первый узел
     int size; //текущий размер списка
     int capacity; // максимальная вместимость массива
     
-    Array() : head(nullptr), size(0), capacity(0) {}
+    Array(size_t cap = 15) : size(0), capacity(cap) { // конструктор для создания
+        arr = new string[capacity]; // выделение памяти
+    }
 
-    Array(int max) : head(nullptr), size(0), capacity(max) {}
-    // инициализируем head с nullptr, размер нулевой и максимальное значение массива
+    ~Array() {
+        delete[] arr; // освобождение памяти
+    }
 
+    void resize();
     void add(int index, std::string value);
     void addToTheEnd(std::string value);
-    std::string get(int index);
+    void get(int index);
     void remove(int index);
     void replace(int index, std::string value);
-    int length();
+    void length();
     void display();
+    void loadFromFile(const std::string& filename);
+    void saveToFile(const std::string& filename);
 };
 
-struct DoubleLinkedList{
+struct DoubleLinkedList{ //done
     Node* head;
     Node* tail;
 
     DoubleLinkedList() : head(nullptr), tail(nullptr) {}
 
+    void clear();
     void addToTheHead(std::string value); // добавление элемента в голову
     void addToTheEnd(std::string value); // добавление элемента в хвост
     void removeFromTheHead(); // удаление элемента с головы
@@ -40,9 +47,15 @@ struct DoubleLinkedList{
     void removeByValue(std::string value); // удаление элемента по значению
     bool searchByValue(std::string value); // поиск элемента по значению
     void display();
+    void loadFromFile(const std::string& filename);
+    void saveToFile(const std::string& filename);
+
+    ~DoubleLinkedList(){
+        clear();
+    }
 };
 
-struct linkedList{
+struct LinkedList{
     Node* head;
     Node* tail;
 
@@ -99,13 +112,13 @@ struct AVLTree {
 
 const int SIZE = 500;
 
-struct HashTableItem {
+struct HashTableItem { // got bored, need to fix
     std::string key;
     std::string data;
     HashTableItem* next; // Указатель на следующий элемент в цепочке
 };
 
-struct HashTable {
+struct HashTable { // got bored, need to fix
     HashTableItem* items[SIZE];
     int count;
 
@@ -114,6 +127,7 @@ struct HashTable {
             items[i] = nullptr;
         }
     }
+    void initialisation(HashTable& hash_table);
     int HashFun(const std::string& key);
     HashTableItem* createItem(const std::string& key, std::string data);
     void push(const std::string& key, std::string data);
@@ -122,7 +136,3 @@ struct HashTable {
 };
 
 void processQuery(const std::string& query);
-// Загрузка данных из файла
-void loadFromFile(const std::string& filename);
-
-void saveToFile(const std::string& filename);
