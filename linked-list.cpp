@@ -1,7 +1,7 @@
 #include "header.h"
 #include "node.h"
 
-void linkedList::addToTheHead(std::string value){ // Добавление в самое начало
+void LinkedList::addToTheHead(std::string value){ // Добавление в самое начало
     Node* newNode = new Node(value);
     if (head == nullptr){
         head = tail = newNode;
@@ -11,7 +11,7 @@ void linkedList::addToTheHead(std::string value){ // Добавление в с�
     }
 }
 
-void linkedList::addToTheEnd(std::string value){
+void LinkedList::addToTheEnd(std::string value){
     Node* newNode = new Node(value);
     if (head == nullptr){
         head = tail = newNode;
@@ -21,7 +21,7 @@ void linkedList::addToTheEnd(std::string value){
     }
 }
 
-void linkedList::removeFromTheHead(){// удаление элемента с головы
+void LinkedList::removeFromTheHead(){// удаление элемента с головы
     if (head == nullptr){
         cout << "Удаление невозможно: список пустой" << endl;
         return;
@@ -32,7 +32,7 @@ void linkedList::removeFromTheHead(){// удаление элемента с г�
     }
 }
 
-void linkedList::removeFromTheEnd(){// удаление элемента с хвоста
+void LinkedList::removeFromTheEnd(){// удаление элемента с хвоста
     if (head == nullptr){
         cout << "Удаление невозможно: список пустой" << endl;
         return;
@@ -53,7 +53,7 @@ void linkedList::removeFromTheEnd(){// удаление элемента с хв
     tail = current; // конец теперь указывает на последний элемент, предпоследний узел
 }
 
-void linkedList::removeByValue(std::string value){ // удаление элемента по значению
+void LinkedList::removeByValue(std::string value){ // удаление элемента по значению
     if (head == nullptr){
         cout << "Невозможно удалить элемент: список пуст" << endl;
         return;
@@ -80,7 +80,7 @@ void linkedList::removeByValue(std::string value){ // удаление элем�
     delete temp; // Удаляем узел
 }
 
-void linkedList::searchByValue(std::string value){ // поиск элемента по значению
+void LinkedList::searchByValue(std::string value){ // поиск элемента по значению
     Node* current = head;
     while (current->next && current->data != value) {
         current = current->next;
@@ -92,7 +92,7 @@ void linkedList::searchByValue(std::string value){ // поиск элемент�
     }
 }
 
-void linkedList::display(){
+void LinkedList::display(){
     Node* current = head;
     while (current != nullptr) {
         cout << current->data << " ";
