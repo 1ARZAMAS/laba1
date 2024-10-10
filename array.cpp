@@ -1,10 +1,23 @@
 #include "header.h"
 #include "node.h"
 
+void Array::resize() { // расширение
+        capacity *= 2; // увеличиваем максимальный размер в 2 раза
+        string* newArr = new string[capacity]; // выделяем память для нового массива
+        for (size_t i = 0; i < size; ++i) {
+            newArr[i] = arr[i]; // копируем элементы в новый массив
+        }
+        delete[] arr; // удаляем старый массив
+        arr = newArr;
+    }
+
 void Array::add(int index, std::string value) {
-    if (index < 0 || index > size || size >= capacity) {
-        cout << "Невозможно добавить элемент. Ошибка индекса или превышен максимальный размер." << endl;
+    if (index < 0 || index > size) {
+        cout << "Невозможно добавить элемент. Ошибка индекса." << endl;
         return;
+    }
+    if (size >= capacity){
+        resise();
     }
 
     Node* newNode = new Node(value); // создаем новый узел с указанным значением
@@ -24,22 +37,34 @@ void Array::add(int index, std::string value) {
 }
 
 void Array::addToTheEnd(std::string value) { // вызываем предыдущую функцию и как параметр указываем 
+    if (size >= capacity){
+        resize();
+    }
     add(size, value); //текущий размер массива, чтобы добавить в конец
 }
 
-string Array::get(int index) {
+void Array::get(int index) {
+    if (size == 0){
+        cout << "Массив пуст!" << endl;
+        return;
+    }
     if (index < 0 || index >= size) {
         cout << "Неверный индекс!" << endl;
-        return "";
+        return;
     }
     Node* current = head;
     for (int i = 0; i < index; i++) { // проходимся до нужного индекса
         current = current->next;
     }
-    return current->data; // и возвращаем значение узла
+    cout << "Элемент по индексу " << index << ": " << current->data << endl;
+    return;
 }
 
 void Array::remove(int index) {
+    if (size == 0){
+        cout << "Массив пуст!" << endl;
+        return;
+    }
     if (index < 0 || index >= size) {
         cout << "Неверный индекс!" << endl;
         return;
@@ -64,6 +89,10 @@ void Array::remove(int index) {
 }
 
 void Array::replace(int index, std::string value) {
+    if (size == 0){
+        cout << "Массив пуст!" << endl;
+        return;
+    }
     if (index < 0 || index >= size) {
         cout << "Неверный индекс!" << endl;
         return;
@@ -75,15 +104,53 @@ void Array::replace(int index, std::string value) {
     current->data = value;
 }
 
-int Array::length() {
-    return size;
+void Array::length() {
+    cout << "Длина массива: " << size << endl;
+    return;
 }
 
 void Array::display() {
+    if (size == 0){
+        cout << "Массив пуст!" << endl;
+        return;
+    }
     Node* current = head;
     while (current) {
         cout << current->data << " ";
         current = current->next;
     }
     cout << endl;
+}
+
+// Загрузка данных из файла
+void loadFromFile(const std::string& filename) {
+    ifstream file(filename);
+    if (!file) {
+        cout << "Ошибка открытия файла: " << filename << endl;
+        return;
+    }
+
+    std::string line;
+    while (getline(file, line)) {
+        addToEnd(line); // добавляем в конец массива
+    }
+    file.close();
+}
+
+// Сохранение данных в файл
+void saveToFile(const std::string& filename) {
+    ofstream file(filename);
+    if (!file) {
+        cout << "Ошибка открытия файла: " << filename << endl;
+        return;
+    }
+
+    Node* current = Array.head;
+     while (current != nullptr){
+            file << current->data << endl;
+            current = current->next;
+        }
+
+    file.close();
+    const_cast<Array*>(this)->size = 0; // очистка массива
 }
