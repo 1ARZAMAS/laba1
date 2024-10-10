@@ -1,6 +1,13 @@
 #include "header.h"
 #include "node.h"
 
+void HashTable::initialisation(HashTable& hash_table) { // инициализация и выделение памяти
+    hash_table.table = new Node* [SIZE]; // выделение памяти под массив указателей
+    for (int i = 0; i < SIZE; i++) {
+        hash_table.table[i] = nullptr; // инициализируем каждый элемент nullptr
+    }
+}
+
 int HashTable::HashFun(const std::string& key) {//хэш функция
     const int prime = 43; // простое число
     int hash = 0;
@@ -40,24 +47,22 @@ void HashTable::push(const std::string& key, std::string data) {
     }
 }
 
-void HashTable::get(const std::string& value) {
+std::string HashTable::get(HashTable& hash_table, const std::string& value) {
     if (count == 0) { // Проверка на пустоту
         cout << "Table is empty" << endl;
-        return;
+        return "";
     }
 
     for (int i = 0; i < SIZE; i++) {
         HashTableItem* current = items[i];
         while (current != nullptr) {
             if (current->data == value) {
-                cout << "Найдено значение: " << current->data << " по ключу: " << current->key << endl; // Если нужно вывести ключ
-                return; // Если найдено, выходим из функции
+                return current->data;
             }
             current = current->next;
         }
+        return "";
     }
-
-    cout << "Значение не найдено" << endl; // Если значение не найдено
 }
 
 
