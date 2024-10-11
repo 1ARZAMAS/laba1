@@ -5,10 +5,10 @@ void Array::resize() { // расширение
         capacity *= 2; // увеличиваем максимальный размер в 2 раза
         string* newArr = new string[capacity]; // выделяем память для нового массива
         for (size_t i = 0; i < size; ++i) {
-            newArr[i] = arr[i]; // копируем элементы в новый массив
+            newArr[i] = array[i]; // копируем элементы в новый массив
         }
-        delete[] arr; // удаляем старый массив
-        arr = newArr;
+        delete[] array; // удаляем старый массив
+        array = newArr;
     }
 
 void Array::add(int index, std::string value) {
@@ -17,7 +17,7 @@ void Array::add(int index, std::string value) {
         return;
     }
     if (size >= capacity){
-        resise();
+        resize();
     }
 
     Node* newNode = new Node(value); // создаем новый узел с указанным значением
@@ -132,7 +132,7 @@ void loadFromFile(const std::string& filename) {
 
     std::string line;
     while (getline(file, line)) {
-        addToEnd(line); // добавляем в конец массива
+        addToTheEnd(line); // добавляем в конец массива
     }
     file.close();
 }
@@ -145,7 +145,7 @@ void saveToFile(const std::string& filename) {
         return;
     }
 
-    Node* current = Array.head;
+    Node* current = array.head;
     while (current != nullptr){
         file << current->data << endl;
         current = current->next;

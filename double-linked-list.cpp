@@ -142,9 +142,9 @@ void saveToFile(const std::string& filename) { // сохранение в фай
         return;
     }
 
-    Node* current = DoubleLinkedList.head;
+    Node* current = doubleLinkedList.head;
     while (current) {
-        file << current->item << endl; // записываем данные в файл
+        file << current->data << endl; // записываем данные в файл
         current = current->next;
     }
     file.close();

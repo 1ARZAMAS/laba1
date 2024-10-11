@@ -14,11 +14,11 @@ struct Array { // done
     int capacity; // максимальная вместимость массива
     
     Array(size_t cap = 15) : size(0), capacity(cap) { // конструктор для создания
-        arr = new string[capacity]; // выделение памяти
+        array = new string[capacity]; // выделение памяти
     }
 
     ~Array() {
-        delete[] arr; // освобождение памяти
+        delete[] array; // освобождение памяти
     }
 
     void resize();
@@ -59,7 +59,7 @@ struct LinkedList{
     Node* head;
     Node* tail;
 
-    linkedList() : head(nullptr), tail(nullptr) {}
+    LinkedList() : head(nullptr), tail(nullptr) {}
 
     void addToTheHead(std::string value); // добавление элемента в голову
     void addToTheEnd(std::string value); // добавление элемента в хвост
