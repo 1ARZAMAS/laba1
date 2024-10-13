@@ -1,15 +1,41 @@
 #include "header.h"
 #include "node.h"
 
-void Array::resize() { // расширение
-        capacity *= 2; // увеличиваем максимальный размер в 2 раза
-        string* newArr = new string[capacity]; // выделяем память для нового массива
-        for (size_t i = 0; i < size; ++i) {
-            newArr[i] = array[i]; // копируем элементы в новый массив
-        }
-        delete[] array; // удаляем старый массив
-        array = newArr;
+struct Array { // done
+    std::string* array;
+    Node* head;
+    int size; //текущий размер списка
+    int capacity; // максимальная вместимость массива
+    
+    Array(size_t cap = 15) : size(0), capacity(cap) { // конструктор для создания
+        array = new string[capacity]; // выделение памяти
     }
+
+    ~Array() {
+        delete[] array; // освобождение памяти
+    }
+
+    void resize();
+    void add(int index, std::string value);
+    void addToTheEnd(std::string value);
+    void get(int index);
+    void remove(int index);
+    void replace(int index, std::string value);
+    void length();
+    void display();
+    void loadFromFile(const std::string& filename);
+    void saveToFile(const std::string& filename);
+};
+
+void Array::resize() { // расширение
+    capacity *= 2; // увеличиваем максимальный размер в 2 раза
+    string* newArr = new string[capacity]; // выделяем память для нового массива
+    for (size_t i = 0; i < size; ++i) {
+        newArr[i] = array[i]; // копируем элементы в новый массив
+    }
+    delete[] array; // удаляем старый массив
+    array = newArr;
+}
 
 void Array::add(int index, std::string value) {
     if (index < 0 || index > size) {
@@ -123,7 +149,7 @@ void Array::display() {
 }
 
 // Загрузка данных из файла
-void loadFromFile(const std::string& filename) {
+void Array::loadFromFile(const std::string& filename) {
     ifstream file(filename);
     if (!file) {
         cout << "Ошибка открытия файла: " << filename << endl;
@@ -138,14 +164,14 @@ void loadFromFile(const std::string& filename) {
 }
 
 // Сохранение данных в файл
-void saveToFile(const std::string& filename) {
+void Array::saveToFile(const std::string& filename) {
     ofstream file(filename);
     if (!file) {
         cout << "Ошибка открытия файла: " << filename << endl;
         return;
     }
 
-    Node* current = array.head;
+    Node* current = head;
     while (current != nullptr){
         file << current->data << endl;
         current = current->next;

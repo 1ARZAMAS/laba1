@@ -8,32 +8,8 @@
 
 using namespace std;
 
-struct Array { // done
-    Node* head; // указываем на первый узел
-    int size; //текущий размер списка
-    int capacity; // максимальная вместимость массива
-    
-    Array(size_t cap = 15) : size(0), capacity(cap) { // конструктор для создания
-        array = new string[capacity]; // выделение памяти
-    }
-
-    ~Array() {
-        delete[] array; // освобождение памяти
-    }
-
-    void resize();
-    void add(int index, std::string value);
-    void addToTheEnd(std::string value);
-    void get(int index);
-    void remove(int index);
-    void replace(int index, std::string value);
-    void length();
-    void display();
-    void loadFromFile(const std::string& filename);
-    void saveToFile(const std::string& filename);
-};
-
 struct DoubleLinkedList{ //done
+    string* doubleLinkedList; 
     Node* head;
     Node* tail;
 
@@ -66,7 +42,7 @@ struct LinkedList{
     void removeFromTheHead(); // удаление элемента с головы
     void removeFromTheEnd(); // удаление элемента с хвоста
     void removeByValue(std::string value); // удаление элемента по значению
-    void searchByValue(std::string value); // поиск элемента по значению
+    void existByValue(std::string value); // существование элемента по значению
     void display();
 };
 

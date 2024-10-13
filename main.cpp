@@ -18,11 +18,6 @@ int main(int argc, char* argv[]) {
         }
     }
 
-    // Загружаем данные из файла
-    if (!filename.empty()) {
-        loadFromFile(filename);
-    }
-
     // Интерактивный ввод команд
     std::string query;
     cout << "Введите команды (или 'exit' для выхода):" << endl;
@@ -34,11 +29,5 @@ int main(int argc, char* argv[]) {
         }
         processQuery(query);
     }
-
-    // Сохраняем данные обратно в файл
-    if (!filename.empty()) {
-        saveToFile(filename);
-    }
-
     return 0;
 }

@@ -120,7 +120,7 @@ void DoubleLinkedList::display(){
     cout << endl;
 }
 
-void loadFromFile(const std::string& filename) { // загрузка данных из файла
+void DoubleLinkedList::loadFromFile(const std::string& filename) { // загрузка данных из файла
     clear(); // очищаем текущий лист
     ifstream file(filename);
     if (!file) {
@@ -135,14 +135,14 @@ void loadFromFile(const std::string& filename) { // загрузка данны�
     file.close();
 }
 
-void saveToFile(const std::string& filename) { // сохранение в файл
+void DoubleLinkedList::saveToFile(const std::string& filename) { // сохранение в файл
     ifstream file(filename);
     if (!file) {
         cout << "Ошибка открытия файла: " << filename << endl;
         return;
     }
 
-    Node* current = doubleLinkedList.head;
+    Node* current = head;
     while (current) {
         file << current->data << endl; // записываем данные в файл
         current = current->next;
