@@ -1,18 +1,21 @@
 #include "header.h"
-#include "node.h"
 
-struct Array { // done
-    std::string* array;
-    Node* head;
-    int size; //текущий размер списка
-    int capacity; // максимальная вместимость массива
-    
-    Array(size_t cap = 15) : size(0), capacity(cap) { // конструктор для создания
-        array = new string[capacity]; // выделение памяти
-    }
+struct ArrayNode {
+    std::string data;
+    ArrayNode* next;
+    ArrayNode* prev;
 
-    ~Array() {
-        delete[] array; // освобождение памяти
+    ArrayNode(const std::string& value, ArrayNode* nextNode = nullptr, ArrayNode* prevNode = nullptr)
+        : data(value), next(nextNode), prev(prevNode) {}
+};
+
+struct Array {
+    ArrayNode* head; // Указатель на голову списка
+    int size; // Текущий размер списка
+    int capacity; // Максимальная вместимость массива
+
+    Array() : head(nullptr), size(0), capacity(10) {
+        head = nullptr;
     }
 
     void resize();
@@ -27,103 +30,100 @@ struct Array { // done
     void saveToFile(const std::string& filename);
 };
 
-void Array::resize() { // расширение
-    capacity *= 2; // увеличиваем максимальный размер в 2 раза
-    string* newArr = new string[capacity]; // выделяем память для нового массива
-    for (size_t i = 0; i < size; ++i) {
-        newArr[i] = array[i]; // копируем элементы в новый массив
-    }
-    delete[] array; // удаляем старый массив
-    array = newArr;
+void Array::resize() {
+    capacity *= 2; // Увеличиваем максимальный размер в 2 раза
 }
 
 void Array::add(int index, std::string value) {
     if (index < 0 || index > size) {
-        cout << "Невозможно добавить элемент. Ошибка индекса." << endl;
+        std::cout << "Невозможно добавить элемент. Ошибка индекса." << std::endl;
         return;
     }
-    if (size >= capacity){
-        resize();
-    }
 
-    Node* newNode = new Node(value); // создаем новый узел с указанным значением
-    if (index == 0) { // если индекс нулевой, то новый узел = голова списка
+    ArrayNode* newNode = new ArrayNode(value); // Создаем новый узел с указанным значением
+    if (index == 0) { // Если индекс нулевой, то новый узел = голова списка
         newNode->next = head;
+        if (head != nullptr) {
+            head->prev = newNode;
+        }
         head = newNode;
-    }
-    else {
-        Node* current = head;
-        for (int i = 0; i < index - 1; i++) { // тут проходимся до указанного индекса
+    } else {
+        ArrayNode* current = head;
+        for (int i = 0; i < index - 1; i++) { // Проходимся до указанного индекса
             current = current->next;
         }
-        newNode->next = current->next; // вставляем новый узел
+        newNode->next = current->next; // Вставляем новый узел
+        newNode->prev = current; // Устанавливаем указатель на предыдущий узел
+        if (current->next != nullptr) {
+            current->next->prev = newNode; // Обновляем указатель у следующего узла
+        }
         current->next = newNode;
     }
     size++;
 }
 
-void Array::addToTheEnd(std::string value) { // вызываем предыдущую функцию и как параметр указываем 
-    if (size >= capacity){
-        resize();
-    }
-    add(size, value); //текущий размер массива, чтобы добавить в конец
+void Array::addToTheEnd(std::string value) {
+    add(size, value); // Текущий размер массива, чтобы добавить в конец
 }
 
 void Array::get(int index) {
-    if (size == 0){
-        cout << "Массив пуст!" << endl;
+    if (size == 0) {
+        std::cout << "Массив пуст!" << std::endl;
         return;
     }
     if (index < 0 || index >= size) {
-        cout << "Неверный индекс!" << endl;
+        std::cout << "Неверный индекс!" << std::endl;
         return;
     }
-    Node* current = head;
-    for (int i = 0; i < index; i++) { // проходимся до нужного индекса
+    ArrayNode* current = head;
+    for (int i = 0; i < index; i++) { // Проходимся до нужного индекса
         current = current->next;
     }
-    cout << "Элемент по индексу " << index << ": " << current->data << endl;
-    return;
+    std::cout << "Элемент по индексу " << index << ": " << current->data << std::endl;
 }
 
 void Array::remove(int index) {
-    if (size == 0){
-        cout << "Массив пуст!" << endl;
+    if (size == 0) {
+        std::cout << "Массив пуст!" << std::endl;
         return;
     }
     if (index < 0 || index >= size) {
-        cout << "Неверный индекс!" << endl;
+        std::cout << "Неверный индекс!" << std::endl;
         return;
     }
 
-    Node* toDelete = nullptr;
-    if (index == 0) { // если индекс нулевой, удаляем голову
+    ArrayNode* toDelete = nullptr;
+    if (index == 0) { // Если индекс нулевой, удаляем голову
         toDelete = head;
         head = head->next;
-    }
-    else {
-        Node* current = head;
-        for (int i = 0; i < index - 1; i++) { // находим узел перед удаляемым
+        if (head != nullptr) {
+            head->prev = nullptr; // Обновляем указатель на предыдущий узел
+        }
+    } else {
+        ArrayNode* current = head;
+        for (int i = 0; i < index - 1; i++) { // Находим узел перед удаляемым
             current = current->next;
-        } 
-        // и перенаправляем его указатель на следующий узел
-        toDelete = current->next; // сохраняем указатель на узел, который хотим удалить
-        current->next = toDelete->next; //перенаправляем указатель на следующий, после удаляемого
+        }
+        toDelete = current->next; // Сохраняем указатель на узел, который хотим удалить
+        if (toDelete->next != nullptr) {
+            toDelete->next->prev = current; // Обновляем указатель у следующего узла
+        }
+        current->next = toDelete->next; // Перенаправляем указатель на следующий
     }
     delete toDelete;
     size--;
 }
 
 void Array::replace(int index, std::string value) {
-    if (size == 0){
-        cout << "Массив пуст!" << endl;
+    if (size == 0) {
+        std::cout << "Массив пуст!" << std::endl;
         return;
     }
     if (index < 0 || index >= size) {
-        cout << "Неверный индекс!" << endl;
+        std::cout << "Неверный индекс!" << std::endl;
         return;
     }
-    Node* current = head;
+    ArrayNode* current = head;
     for (int i = 0; i < index; i++) {
         current = current->next;
     }
@@ -131,52 +131,47 @@ void Array::replace(int index, std::string value) {
 }
 
 void Array::length() {
-    cout << "Длина массива: " << size << endl;
-    return;
+    std::cout << "Длина массива: " << size << std::endl;
 }
 
 void Array::display() {
-    if (size == 0){
-        cout << "Массив пуст!" << endl;
+    if (size == 0) {
+        std::cout << "Массив пуст!" << std::endl;
         return;
     }
-    Node* current = head;
+    ArrayNode* current = head;
     while (current) {
-        cout << current->data << " ";
+        std::cout << current->data << " ";
         current = current->next;
     }
-    cout << endl;
+    std::cout << std::endl;
 }
 
-// Загрузка данных из файла
 void Array::loadFromFile(const std::string& filename) {
-    ifstream file(filename);
+    std::ifstream file(filename);
     if (!file) {
-        cout << "Ошибка открытия файла: " << filename << endl;
+        std::cout << "Ошибка открытия файла: " << filename << std::endl;
         return;
     }
 
     std::string line;
-    while (getline(file, line)) {
-        addToTheEnd(line); // добавляем в конец массива
+    while (std::getline(file, line)) {
+        addToTheEnd(line); // Добавляем в конец массива
     }
     file.close();
 }
 
-// Сохранение данных в файл
 void Array::saveToFile(const std::string& filename) {
-    ofstream file(filename);
+    std::ofstream file(filename);
     if (!file) {
-        cout << "Ошибка открытия файла: " << filename << endl;
+        std::cout << "Ошибка открытия файла: " << filename << std::endl;
         return;
     }
 
-    Node* current = head;
-    while (current != nullptr){
-        file << current->data << endl;
+    ArrayNode* current = head;
+    while (current != nullptr) {
+        file << current->data << std::endl;
         current = current->next;
     }
-
     file.close();
-    const_cast<Array*>(this)->size = 0; // очистка массива
 }
