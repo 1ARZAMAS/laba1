@@ -1,8 +1,37 @@
 #include "header.h"
-#include "node.h"
+
+struct DLLNode {
+    std::string data;
+    DLLNode* next;
+    DLLNode* prev;
+
+    DLLNode(std::string value) : data(value), next(nullptr), prev(nullptr) {}
+};
+
+struct DoubleLinkedList{ //done
+    std::string* doubleLinkedList; 
+    DLLNode* head;
+    DLLNode* tail;
+
+    DoubleLinkedList() : head(nullptr), tail(nullptr) {}
+
+    void addToTheHead(std::string value); // добавление элемента в голову
+    void addToTheEnd(std::string value); // добавление элемента в хвост
+    void removeFromTheHead(); // удаление элемента с головы
+    void removeFromTheEnd(); // удаление элемента с хвоста
+    void removeByValue(std::string value); // удаление элемента по значению
+    bool searchByValue(std::string value); // поиск элемента по значению
+    void display();
+    void loadFromFile(const std::string& filename);
+    void saveToFile(const std::string& filename);
+
+    ~DoubleLinkedList(){
+        clear();
+    }
+};
 
 void DoubleLinkedList::addToTheHead(std::string value){ // Добавление в самое начало
-    Node* newNode = new Node(value);
+    DLLNode* newNode = new DLLNode(value);
     if (head == nullptr){
         head = tail = newNode;
     } else {
@@ -13,7 +42,7 @@ void DoubleLinkedList::addToTheHead(std::string value){ // Добавление 
 }
 
 void DoubleLinkedList::addToTheEnd(std::string value){
-    Node* newNode = new Node(value);
+    DLLNode* newNode = new DLLNode(value);
     if (head == nullptr){
         head = tail = newNode;
     } else {
@@ -28,16 +57,10 @@ void DoubleLinkedList::removeFromTheHead(){// удаление элемента 
         cout << "Удаление невозможно: список пустой" << endl;
         return;
     } else {
-        Node* temp = head;
+        DLLNode* temp = head;
         head->next->prev = nullptr;
         head = head->next;//удаляем первый элемент
         delete temp;
-    }
-}
-
-void DoubleLinkedList::clear(){
-    while(head){
-        removeFromTheHead();
     }
 }
 
@@ -53,7 +76,7 @@ void DoubleLinkedList::removeFromTheEnd(){// удаление элемента �
         return;
     }
     
-    Node* current = tail;
+    DLLNode* current = tail;
     tail->prev->next = nullptr;
     tail = tail->prev; // Удаляем последний элемент
     delete current;
@@ -73,7 +96,7 @@ void DoubleLinkedList::removeByValue(std::string value){ // удаление э�
         return;
     }
     
-    Node* current = head;
+    DLLNode* current = head;
     while (current->next && current->next->data != value){ // Пока вообще можем идти по списку
     // и пока значение не будет равно нужному
         current = current->next;
@@ -98,7 +121,7 @@ void DoubleLinkedList::removeByValue(std::string value){ // удаление э�
 }
 
 bool DoubleLinkedList::searchByValue(std::string value){ // поиск элемента по значению
-    Node* current = head;
+    DLLNode* current = head;
     while (current->next && current->data != value) {
         current = current->next;
     }
@@ -112,7 +135,7 @@ bool DoubleLinkedList::searchByValue(std::string value){ // поиск элем�
 }
 
 void DoubleLinkedList::display(){
-    Node* current = head;
+    DLLNode* current = head;
     while (current != nullptr) {
         cout << current->data << " ";
         current = current->next;
@@ -124,7 +147,7 @@ void DoubleLinkedList::loadFromFile(const std::string& filename) { // загру
     clear(); // очищаем текущий лист
     ifstream file(filename);
     if (!file) {
-        cout << "Ошибка открытия файла: " << filename << endl;
+        cout << "Ошибка открытия файла: " << filename << std::endl;
         return;
     }
 
@@ -138,13 +161,13 @@ void DoubleLinkedList::loadFromFile(const std::string& filename) { // загру
 void DoubleLinkedList::saveToFile(const std::string& filename) { // сохранение в файл
     ifstream file(filename);
     if (!file) {
-        cout << "Ошибка открытия файла: " << filename << endl;
+        std::cout << "Ошибка открытия файла: " << filename << std::endl;
         return;
     }
 
-    Node* current = head;
+    DLLNode* current = head;
     while (current) {
-        file << current->data << endl; // записываем данные в файл
+        file << current->data << std::endl; // записываем данные в файл
         current = current->next;
     }
     file.close();

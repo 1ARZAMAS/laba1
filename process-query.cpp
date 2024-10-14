@@ -1,13 +1,13 @@
 #include "header.h"
 #include "node.h"
 
-Array array; // создание массива
-LinkedList linkedList; // создание односвзяного листа
-DoubleLinkedList doubleLinkedList; // создание двусвязного листа
-Queue queue; // создание очереди
-Stack stack; // создание стэка
-AVLTree tree; // создание дерева
-HashTable hash_table = HashTable(); // создание хэш-таблицы
+// Array array; // создание массива
+// LinkedList linkedList; // создание односвзяного листа
+// DoubleLinkedList doubleLinkedList; // создание двусвязного листа
+// Queue queue; // создание очереди
+// Stack stack; // создание стэка
+// AVLTree tree; // создание дерева
+// HashTable hash_table = HashTable(); // создание хэш-таблицы
 
 void processQuery(const std::string& query) {
     std::stringstream ss(query);

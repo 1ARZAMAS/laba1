@@ -8,66 +8,6 @@
 
 using namespace std;
 
-struct DoubleLinkedList{ //done
-    string* doubleLinkedList; 
-    Node* head;
-    Node* tail;
-
-    DoubleLinkedList() : head(nullptr), tail(nullptr) {}
-
-    void clear();
-    void addToTheHead(std::string value); // добавление элемента в голову
-    void addToTheEnd(std::string value); // добавление элемента в хвост
-    void removeFromTheHead(); // удаление элемента с головы
-    void removeFromTheEnd(); // удаление элемента с хвоста
-    void removeByValue(std::string value); // удаление элемента по значению
-    bool searchByValue(std::string value); // поиск элемента по значению
-    void display();
-    void loadFromFile(const std::string& filename);
-    void saveToFile(const std::string& filename);
-
-    ~DoubleLinkedList(){
-        clear();
-    }
-};
-
-struct LinkedList{
-    Node* head;
-    Node* tail;
-
-    LinkedList() : head(nullptr), tail(nullptr) {}
-
-    void addToTheHead(std::string value); // добавление элемента в голову
-    void addToTheEnd(std::string value); // добавление элемента в хвост
-    void removeFromTheHead(); // удаление элемента с головы
-    void removeFromTheEnd(); // удаление элемента с хвоста
-    void removeByValue(std::string value); // удаление элемента по значению
-    void existByValue(std::string value); // существование элемента по значению
-    void display();
-};
-
-struct Queue{
-    Node* head;
-    Node* tail;
-    Queue(){
-        head = nullptr;
-        tail = nullptr;
-    }
-    void push(std::string value); //добавление
-    void pop(); //удаление
-    void display(); //вывод на экран
-};
-
-struct Stack {
-    Node* top;
-    Stack(){
-        top = nullptr;
-    }
-    void push(std::string value); //добавление
-    void pop(); //удаление
-    void display(); //вывод стека
-};
-
 struct AVLTree {
     Node2* root; // Указатель на корень дерева
 
@@ -86,29 +26,5 @@ struct AVLTree {
     void inOrder(Node2* node); // симметричный обход
 };
 
-const int SIZE = 500;
-
-struct HashTableItem { // got bored, need to fix
-    std::string key;
-    std::string data;
-    HashTableItem* next; // Указатель на следующий элемент в цепочке
-};
-
-struct HashTable { // got bored, need to fix
-    HashTableItem* items[SIZE];
-    int count;
-
-    HashTable() : count(0) {//заполнение таблицы
-        for (int i = 0; i < SIZE; i++) { // все элементы nullptr
-            items[i] = nullptr;
-        }
-    }
-    void initialisation(HashTable& hash_table);
-    int HashFun(const std::string& key);
-    HashTableItem* createItem(const std::string& key, std::string data);
-    void push(const std::string& key, std::string data);
-    void get(const std::string& key);
-    void pop(const std::string& key);
-};
 
 void processQuery(const std::string& query);

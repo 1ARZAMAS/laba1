@@ -1,102 +1,141 @@
-#include "header.h"
-#include "node.h"
+#include <iostream>
+#include <string>
+#include <fstream>
 
-void LinkedList::addToTheHead(std::string value){ // Добавление в самое начало
-    Node* newNode = new Node(value);
-    if (head == nullptr){
-        head = tail = newNode;
-    } else {
-        newNode->next = head;
+struct LLNode {
+    std::string data;
+    LLNode* next;
+
+    LLNode(std::string value) : data(value), next(nullptr) {}
+};
+
+struct LinkedList {
+    LLNode* head;
+
+    LinkedList() : head(nullptr) {}
+
+    void addToTheHead(std::string value);
+    void addToTheEnd(std::string value);
+    void removeFromTheHead();
+    void removeFromTheEnd();
+    void removeByValue(std::string value);
+    void searchByValue(std::string value);
+    void display();
+    void saveToFile(const std::string& filename);
+    void loadFromFile(const std::string& filename);
+};
+
+void LinkedList::addToTheHead(std::string value) {
+    LLNode* newNode = new LLNode(value);
+    newNode->next = head;
+    head = newNode;
+}
+
+void LinkedList::addToTheEnd(std::string value) {
+    LLNode* newNode = new LLNode(value);
+    if (head == nullptr) {
         head = newNode;
-    }
-}
-
-void LinkedList::addToTheEnd(std::string value){
-    Node* newNode = new Node(value);
-    if (head == nullptr){
-        head = tail = newNode;
     } else {
-        tail->next = newNode;
-        tail = newNode;
+        LLNode* current = head;
+        while (current->next != nullptr) {
+            current = current->next;
+        }
+        current->next = newNode;
     }
 }
 
-void LinkedList::removeFromTheHead(){// удаление элемента с головы
-    if (head == nullptr){
-        cout << "Удаление невозможно: список пустой" << endl;
+void LinkedList::removeFromTheHead() {
+    if (head == nullptr) {
+        std::cout << "Удаление невозможно: список пустой" << std::endl;
         return;
-    } else{
-        Node* temp = head;
-        head = head->next;
-        delete temp;
     }
+    LLNode* temp = head;
+    head = head->next;
+    delete temp;
 }
 
-void LinkedList::removeFromTheEnd(){// удаление элемента с хвоста
-    if (head == nullptr){
-        cout << "Удаление невозможно: список пустой" << endl;
+void LinkedList::removeFromTheEnd() {
+    if (head == nullptr) {
+        std::cout << "Удаление невозможно: список пустой" << std::endl;
         return;
     }
-    if (head == tail){
+    if (head->next == nullptr) {
         delete head;
         head = nullptr;
-        tail = nullptr;
         return;
     }
-    Node* current = head;
-    while (current->next != tail){ // текущий будет указывать на предпоследний узел
+    LLNode* current = head;
+    while (current->next->next != nullptr) {
         current = current->next;
     }
-    current->next = nullptr; // обнуляем указатель на последний элемент
-    // те разрываем связь с последним узлом
-    delete tail; // удаляем последний узел
-    tail = current; // конец теперь указывает на последний элемент, предпоследний узел
+    delete current->next; // Удаляем последний узел
+    current->next = nullptr; // Обнуляем указатель на последний элемент
 }
 
-void LinkedList::removeByValue(std::string value){ // удаление элемента по значению
-    if (head == nullptr){
-        cout << "Невозможно удалить элемент: список пуст" << endl;
+void LinkedList::removeByValue(std::string value) {
+    if (head == nullptr) {
+        std::cout << "Невозможно удалить элемент: список пуст" << std::endl;
         return;
     }
-    if (value == head->data){
+    if (value == head->data) {
         removeFromTheHead();
         return;
     }
-    if (value == tail->data){
-        removeFromTheEnd();
-        return;
-    }
-    Node* current = head;
-    while (current->next && current->next->data != value){ // Пока вообще можем идти по списку
-    // и пока значение не будет равно нужному
+    LLNode* current = head;
+    while (current->next && current->next->data != value) {
         current = current->next;
     }
-    if (current->next == nullptr){
-        cout << "Такого значения нет в списке" << endl;
+    if (current->next == nullptr) {
+        std::cout << "Такого значения нет в списке" << std::endl;
         return;
     }
-    Node* temp = current->next;
-    current->next = temp->next; // Обновляем указатель на следующий элемент
-    delete temp; // Удаляем узел
+    LLNode* temp = current->next;
+    current->next = temp->next;
+    delete temp;
 }
 
-void LinkedList::searchByValue(std::string value){ // поиск элемента по значению
-    Node* current = head;
-    while (current->next && current->data != value) {
+void LinkedList::searchByValue(std::string value) {
+    LLNode* current = head;
+    while (current != nullptr && current->data != value) {
         current = current->next;
     }
-    if (current->data == value){
-        cout << "Значение " << current->data << " существует в списке" << endl;
+    if (current != nullptr) {
+        std::cout << "Значение " << current->data << " существует в списке" << std::endl;
     } else {
-        cout << "Такого элемента " << current->data << " нет в списке" << endl;
+        std::cout << "Такого элемента нет в списке" << std::endl;
     }
 }
 
-void LinkedList::display(){
-    Node* current = head;
+void LinkedList::display() {
+    LLNode* current = head;
     while (current != nullptr) {
-        cout << current->data << " ";
+        std::cout << current->data << " ";
         current = current->next;
     }
-    cout << endl;
+    std::cout << std::endl;
+}
+
+void LinkedList::saveToFile(const std::string& filename) {
+    std::ofstream file(filename);
+    if (!file) {
+        std::cout << "Ошибка открытия файла: " << filename << std::endl;
+        return;
+    }
+    LLNode* current = head;
+    while (current != nullptr) {
+        file << current->data << std::endl;
+        current = current->next;
+    }
+}
+
+void LinkedList::loadFromFile(const std::string& filename) {
+    std::ifstream file(filename);
+    if (!file) {
+        std::cout << "Ошибка открытия файла: " << filename << std::endl;
+        return;
+    }
+    std::string value;
+    while (file >> value) {
+        addToTheEnd(value);
+    }
 }

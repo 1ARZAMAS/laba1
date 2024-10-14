@@ -1,14 +1,14 @@
 #include "header.h"
 
-struct Node {
+struct StackNode {
     std::string data;
-    Node* next;
+    StackNode* next;
 
-    Node(std::string value) : data(value), next(nullptr) {}
+    StackNode(std::string value) : data(value), next(nullptr) {}
 };
 
 struct Stack {
-    Node* top;
+    StackNode* top;
     Stack(){
         top = nullptr;
     }
@@ -23,7 +23,7 @@ struct Stack {
 };
 
 void Stack::push(std::string value){
-    Node* node = new Node(value);
+    StackNode* node = new StackNode(value);
     if (top == nullptr){ // если стек пустой
         top = node; // то top = введеное значение
     } else {
@@ -36,7 +36,7 @@ void Stack::pop(){
     if (top == nullptr){
         cout << "Стек пустой, удалить значение невозможно" << endl;
     } else {
-        Node* temp = top;
+        StackNode* temp = top;
         top = top->next;
         cout << "Удаленный элемент: " << temp->data << endl;
         delete temp;
@@ -48,7 +48,7 @@ void Stack::display(){
         cout << "Стек пустой" << endl;
     } else {
         cout << "Стек состоит из следующих элементов: ";
-        Node* current = top;
+        StackNode* current = top;
         while(current != nullptr){
             cout << current->data << " ";
             current = current->next;
@@ -63,7 +63,7 @@ void Stack::saveToFile(const std::string& filename) {
         cout << "Ошибка открытия файла: " << filename << endl;
         return;
     }
-    Node* current = top;
+    StackNode* current = top;
     while (current != nullptr) {
         file << current->data << endl;
         current = current->next;
