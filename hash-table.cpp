@@ -1,8 +1,49 @@
 #include "header.h"
 #include "node.h"
 
+struct HashNode {
+    std::string key;
+    std::string data;
+    HashNode* next;
+    HashNode* prev;
+
+    HashNode* next;        // Указатель на следующий элемент в цепочке
+    HashNode(const string& key, const string& data) : key(key), value(data), next(nullptr) {}
+};
+
+const int SIZE = 500;
+
+struct HashTableItem { // got bored, need to fix
+    std::string key;
+    std::string data;
+    HashTableItem* next; // Указатель на следующий элемент в цепочке
+};
+
+struct HashTable { // got bored, need to fix
+    HashTableItem* items[SIZE];
+    int count;
+
+    HashTable() : count(0) {//заполнение таблицы
+        for (int i = 0; i < SIZE; i++) { // все элементы nullptr
+            items[i] = nullptr;
+        }
+    }
+
+    void initialisation(HashTable& hash_table);
+    int HashFun(const std::string& key);
+    HashTableItem* createItem(const std::string& key, std::string data);
+    void push(const std::string& key, std::string data);
+    void get(const std::string& key);
+    void pop(const std::string& key);
+    ~HashTable() {
+        clear();  // Освобождение памяти при удалении
+        delete[] items;
+    }
+};
+
+
 void HashTable::initialisation(HashTable& hash_table) { // инициализация и выделение памяти
-    hash_table.table = new Node* [SIZE]; // выделение памяти под массив указателей
+    hash_table.table = new HashNode* [SIZE]; // выделение памяти под массив указателей
     for (int i = 0; i < SIZE; i++) {
         hash_table.table[i] = nullptr; // инициализируем каждый элемент nullptr
     }
