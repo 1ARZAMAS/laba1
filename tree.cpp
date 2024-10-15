@@ -1,7 +1,52 @@
 #include "header.h"
-#include "node.h"
 
-int AVLTree::height(Node2* node) { // высота узла
+struct AVLNode {
+    std::string key; // значение узла
+    AVLNode* left; // указатели на левые и правые дочерние узлы
+    AVLNode* right;
+    int height; // высота узла
+    // инициализируем дерево
+    AVLNode(std::string value) : key(value), left(nullptr), right(nullptr), height(1) {}
+};
+
+struct AVLTree {
+    AVLNode* root; // Указатель на корень дерева
+
+    AVLTree() : root(nullptr) {}
+
+    void saveNode(AVLNode* node, std::ofstream& file);
+    int height(AVLNode* node); // высота узла
+    int balanceFactor(AVLNode* node); // вычисляет баланс
+    void updateHeight(AVLNode* node); // обновляет высоту дерева на основе дочерних узлов
+    AVLNode* rotateRight(AVLNode* y); // правый поворот для балансировки дерева
+    AVLNode* rotateLeft(AVLNode* x); // левый поворот для балансировки дерева
+    AVLNode* balance(AVLNode* node); // проверяет баланс и выполняет повороты, если нужно
+    AVLNode* insert(AVLNode* node, std::string key); // вставляем узел в дерево и балансируем
+    AVLNode* minValueNode(AVLNode* node); // находим самый левый узел (минимальное значение)
+    AVLNode* remove(AVLNode* node, std::string key); // удаляем узел и балансируем
+    bool search(AVLNode* node, std::string key); // проверяем есть ли узел в дереве с нужным значением
+    void inOrder(AVLNode* node); // симметричный обход
+    void clear();
+    void saveToFile(const std::string& filename);
+    void loadFromFile(const std::string& filename);
+    
+};
+
+void AVLTree::clear() {
+    while (root) {
+        root = remove(root, root->key); // Удаляем корень, пока он не станет пустым
+    }
+}
+
+void AVLTree::saveNode(AVLNode* node, std::ofstream& file) {
+    if (node) {
+        file << node->key << std::endl; // Сохраняем ключ узла
+        AVLTree::saveNode(node->left, file);      // Рекурсивно сохраняем левое поддерево
+        AVLTree::saveNode(node->right, file);     // Рекурсивно сохраняем правое поддерево
+    }
+}
+
+int AVLTree::height(AVLNode* node) { // высота узла
     if (node){// возвращает высоту узла 0, если узел пуст
         return node->height;
     } else {
@@ -9,7 +54,7 @@ int AVLTree::height(Node2* node) { // высота узла
     }
 }
 
-int AVLTree::balanceFactor(Node2* node) {// вычисляет баланс
+int AVLTree::balanceFactor(AVLNode* node) {// вычисляет баланс
     if (node){
         return height(node->left) - height(node->right);
     } else {
@@ -17,16 +62,16 @@ int AVLTree::balanceFactor(Node2* node) {// вычисляет баланс
     }
 }
 
-void AVLTree::updateHeight(Node2* node) {// обновляет высоту дерева на основе дочерних узлов
+void AVLTree::updateHeight(AVLNode* node) {// обновляет высоту дерева на основе дочерних узлов
     if (node) {
         node->height = max(height(node->left), height(node->right)) + 1; // максимальное значение + 1 для текущего узла
     }
 }
 
 // Когда у баланс больше 1, а х больше 0
-Node2* AVLTree::rotateRight(Node2* y) {// правый поворот для балансировки дерева
-    Node2* x = y->left; // x - левый ребенок y
-    Node2* T2 = x->right; // T2 - правый ребенок x
+AVLNode* AVLTree::rotateRight(AVLNode* y) {// правый поворот для балансировки дерева
+    AVLNode* x = y->left; // x - левый ребенок y
+    AVLNode* T2 = x->right; // T2 - правый ребенок x
     x->right = y; // x становится новым корнем, y - правым ребенком x
     y->left = T2; // T2 теперь - левым ребенком y
     updateHeight(y); // обновляем высоту y
@@ -35,9 +80,9 @@ Node2* AVLTree::rotateRight(Node2* y) {// правый поворот для б�
 }
 
 // используется, когда х меньше -1, у имеет баланс <0
-Node2* AVLTree::rotateLeft(Node2* x) {// левый поворот для балансировки дерева
-    Node2* y = x->right; // y - правый ребенок x
-    Node2* T2 = y->left; // T2 - левый ребенок y
+AVLNode* AVLTree::rotateLeft(AVLNode* x) {// левый поворот для балансировки дерева
+    AVLNode* y = x->right; // y - правый ребенок x
+    AVLNode* T2 = y->left; // T2 - левый ребенок y
     y->left = x; // y становится новым корнем, x - левым ребенком y
     x->right = T2; // T2 теперь - правым ребенком x
     updateHeight(x); // обновляем высоту x
@@ -45,7 +90,7 @@ Node2* AVLTree::rotateLeft(Node2* x) {// левый поворот для бал
     return y; // возвращаем новый корень
 }
 
-Node2* AVLTree::balance(Node2* node) {// проверяет баланс и выполняет повороты, если нужно
+AVLNode* AVLTree::balance(AVLNode* node) {// проверяет баланс и выполняет повороты, если нужно
     updateHeight(node);
     int balance = balanceFactor(node);
     if (balance > 1) {
@@ -63,9 +108,9 @@ Node2* AVLTree::balance(Node2* node) {// проверяет баланс и вы
     return node;
 }
 
-Node2* AVLTree::insert(Node2* node, std::string key) {// вставляем узел в дерево и балансируем
+AVLNode* AVLTree::insert(AVLNode* node, std::string key) {// вставляем узел в дерево и балансируем
     if (!node) { // если узел пустой, то создаем новый
-        return new Node2(key);
+        return new AVLNode(key);
     }
     if (key < node->key) {
         node->left = insert(node->left, key); // вставлем в левое поддерево, если новое значение меньше текущего
@@ -77,15 +122,15 @@ Node2* AVLTree::insert(Node2* node, std::string key) {// вставляем уз
     return balance(node);
 }
 
-Node2* AVLTree::minValueNode(Node2* node) {// находим самый левый узел (минимальное значение)
-    Node2* current = node;
+AVLNode* AVLTree::minValueNode(AVLNode* node) {// находим самый левый узел (минимальное значение)
+    AVLNode* current = node;
     while (current && current->left) {
         current = current->left;
     }
     return current;
 }
 
-Node2* AVLTree::remove(Node2* node, std::string key) {// удаляем узел и балансируем
+AVLNode* AVLTree::remove(AVLNode* node, std::string key) {// удаляем узел и балансируем
     if (!node) {
         return node; // если узел пустой, то ничего не делаем
     }
@@ -96,23 +141,23 @@ Node2* AVLTree::remove(Node2* node, std::string key) {// удаляем узел
     } else {
         // узел найден
         if (!node->left) {
-            Node2* temp = node->right; // если нет левого дочернего узла
+            AVLNode* temp = node->right; // если нет левого дочернего узла
             delete node; //удаляем текущий узел
             return temp; // возвращаем правое поддерево
         } else if (!node->right) {
-            Node2* temp = node->left; // если нет правого дочернего узла
+            AVLNode* temp = node->left; // если нет правого дочернего узла
             delete node; // удаляем текущий узел
             return temp; // возвращаем левое поддерево
         }
         // узел с двумя дочерними узлами
-        Node2* temp = minValueNode(node->right); //находим минимальный узел в правом поддереве
+        AVLNode* temp = minValueNode(node->right); //находим минимальный узел в правом поддереве
         node->key = temp->key; // копируем в текущий узел
         node->right = remove(node->right, temp->key); // удаляем минимальный узел в правом поддереве
     }
     return balance(node); //балансируем
 }
 
-bool AVLTree::search(Node2* node, std::string key) {// проверяем есть ли узел в дереве с нужным значением
+bool AVLTree::search(AVLNode* node, std::string key) {// проверяем есть ли узел в дереве с нужным значением
     if (!node){
         return false;
     } 
@@ -126,10 +171,38 @@ bool AVLTree::search(Node2* node, std::string key) {// проверяем ест
     }
 }
 
-void AVLTree::inOrder(Node2* node) {// симметричный обход
+void AVLTree::inOrder(AVLNode* node) {// симметричный обход
     if (node) {
         inOrder(node->left);
         cout << node->key << " ";
         inOrder(node->right);
     }
+}
+
+void AVLTree::saveToFile(const std::string& filename) {
+    std::ofstream file(filename);
+    if (!file) {
+        std::cout << "Ошибка открытия файла: " << filename << std::endl;
+        return;
+    }
+
+    saveNode(root, file); // Начинаем с корня дерева
+    file.close();
+}
+
+void AVLTree::loadFromFile(const std::string& filename) {
+    std::ifstream file(filename);
+    if (!file) {
+        std::cout << "Ошибка открытия файла: " << filename << std::endl;
+        return;
+    }
+
+    clear(); // Очищаем текущее дерево перед загрузкой
+
+    std::string key;
+    while (std::getline(file, key)) {
+        insert(root, key); // Вставляем каждый ключ в дерево
+    }
+
+    file.close();
 }

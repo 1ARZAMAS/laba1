@@ -2,7 +2,7 @@
 
 struct QueueNode {
     std::string data;
-    Node* next;
+    QueueNode* next;
 
     QueueNode(std::string value) : data(value), next(nullptr) {}
 };
@@ -22,13 +22,13 @@ struct Queue{
 };
 
 void Queue::push(std::string value){
-    QueueNode* node = new QueueNode {value, nullptr};
+    QueueNode* newNode = new QueueNode(value);
     if (head == nullptr){
-        head = node;
-        tail = node;
+        head = newNode;
+        tail = newNode;
     } else {
-        tail->next = node; //устанавливаем указатель текущего хвоста на новый узел
-        tail = node;
+        tail->next = newNode; //устанавливаем указатель текущего хвоста на новый узел
+        tail = newNode;
     }
 }
 
@@ -36,7 +36,7 @@ void Queue::pop(){
     if(head == nullptr){
         cout << "Очередь пуста!" << endl;
     } else {
-        Node* temp = head;
+        QueueNode* temp = head;
         head = head->next; //удаляем первый элемент очереди
         cout << "Удаленный элемент: " << temp->data << endl;
         delete temp;
@@ -50,7 +50,7 @@ void Queue::display(){
     if (head == nullptr){
         cout << "Очередь пуста!" << endl;
     } else {
-        Node* current = head;
+        QueueNode* current = head;
         while(current != nullptr){
             cout << current->data << " ";
             current = current->next;
@@ -61,7 +61,7 @@ void Queue::display(){
 
 // Сохранение очереди в файл
 void Queue::saveToFile(const std::string& filename) {
-    ofstream file(filename);
+    std::ofstream file(filename);
     if (!file) {
         cout << "Ошибка открытия файла: " << filename << endl;
         return;
@@ -76,14 +76,14 @@ void Queue::saveToFile(const std::string& filename) {
 
 // Загрузка очереди из файла
 void Queue::loadFromFile(const std::string& filename) {
-    ofstream file(filename);
+    std::ifstream file(filename);
     if (!file) {
-        cout << "Ошибка открытия файла: " << filename << endl;
+        std::cout << "Ошибка открытия файла: " << filename << std::endl;
         return;
     }
     std::string value;
-    while (file >> value) {
-        enqueue(value);
+    while (std::getline(file, value)) {
+        push(value);
     }
     file.close();
 }

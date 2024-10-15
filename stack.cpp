@@ -12,15 +12,20 @@ struct Stack {
     Stack(){
         top = nullptr;
     }
-    ~Stack() {
-        clear();  // Очистка памяти при удалении стека
-    }
+    
+    void clear();
     void push(std::string value); //добавление
     void pop(); //удаление
     void display(); //вывод стека
     void saveToFile(const std::string& filename);
     void loadFromFile(const std::string& filename);
 };
+
+void Stack::clear(){
+    while (top != nullptr) {
+        pop();
+    }
+}
 
 void Stack::push(std::string value){
     StackNode* node = new StackNode(value);
@@ -58,7 +63,7 @@ void Stack::display(){
 }
 
 void Stack::saveToFile(const std::string& filename) {
-    ofstream file(filename);
+    std::ofstream file(filename);
     if (!file) {
         cout << "Ошибка открытия файла: " << filename << endl;
         return;
@@ -73,14 +78,14 @@ void Stack::saveToFile(const std::string& filename) {
 
 // Загрузка стека из файла
 void Stack::loadFromFile(const std::string& filename) {
-    ofstream file(filename);
+    std::ifstream file(filename);
     if (!file) {
         cout << "Ошибка открытия файла: " << filename << endl;
         return;
     }
     std::string value;
     clear();  // Сбрасываем текущий стек перед загрузкой
-    while (file >> value) {
+    while (std::getline(file, value)) {
         push(value);
     }
     file.close();

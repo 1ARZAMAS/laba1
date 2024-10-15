@@ -1,5 +1,4 @@
 #include "header.h"
-#include "node.h"
 
 // Array array; // создание массива
 // LinkedList linkedList; // создание односвзяного листа

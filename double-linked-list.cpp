@@ -24,11 +24,17 @@ struct DoubleLinkedList{ //done
     void display();
     void loadFromFile(const std::string& filename);
     void saveToFile(const std::string& filename);
-
-    ~DoubleLinkedList(){
-        clear();
-    }
+    void clear();
+    // ~DoubleLinkedList(){
+    //     clear();
+    // }
 };
+
+void DoubleLinkedList::clear() {
+    while (head != nullptr) {
+        removeFromTheHead();
+    }
+}
 
 void DoubleLinkedList::addToTheHead(std::string value){ // Добавление в самое начало
     DLLNode* newNode = new DLLNode(value);
@@ -120,19 +126,19 @@ void DoubleLinkedList::removeByValue(std::string value){ // удаление э�
     delete current; // и удаляем текущий
 }
 
-bool DoubleLinkedList::searchByValue(std::string value){ // поиск элемента по значению
+bool DoubleLinkedList::searchByValue(std::string value) {
     DLLNode* current = head;
-    while (current->next && current->data != value) {
+    while (current) {
+        if (current->data == value) {
+            std::cout << "Значение " << current->data << " существует в списке" << std::endl;
+            return true;
+        }
         current = current->next;
     }
-    if (current->data == value){
-        cout << "Значение " << current->data << " существует в списке" << endl;
-        return true;
-    } else {
-        cout << "Такого элемента " << current->data << " нет в списке" << endl;
-        return false;
-    }
+    std::cout << "Такого элемента " << value << " нет в списке" << std::endl;
+    return false;
 }
+
 
 void DoubleLinkedList::display(){
     DLLNode* current = head;
@@ -145,7 +151,7 @@ void DoubleLinkedList::display(){
 
 void DoubleLinkedList::loadFromFile(const std::string& filename) { // загрузка данных из файла
     clear(); // очищаем текущий лист
-    ifstream file(filename);
+    std::ifstream file(filename);
     if (!file) {
         cout << "Ошибка открытия файла: " << filename << std::endl;
         return;
@@ -159,7 +165,7 @@ void DoubleLinkedList::loadFromFile(const std::string& filename) { // загру
 }
 
 void DoubleLinkedList::saveToFile(const std::string& filename) { // сохранение в файл
-    ifstream file(filename);
+    std::ofstream file(filename);
     if (!file) {
         std::cout << "Ошибка открытия файла: " << filename << std::endl;
         return;

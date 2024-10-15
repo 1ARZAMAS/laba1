@@ -1,5 +1,4 @@
 #include "header.h"
-#include "node.h"
 
 struct HashNode {
     std::string key;
@@ -7,8 +6,7 @@ struct HashNode {
     HashNode* next;
     HashNode* prev;
 
-    HashNode* next;        // Указатель на следующий элемент в цепочке
-    HashNode(const string& key, const string& data) : key(key), value(data), next(nullptr) {}
+    HashNode(const string& key, const string& data) : key(key), data(data), next(nullptr) {}
 };
 
 const int SIZE = 500;
@@ -28,24 +26,25 @@ struct HashTable { // got bored, need to fix
             items[i] = nullptr;
         }
     }
-
-    void initialisation(HashTable& hash_table);
     int HashFun(const std::string& key);
     HashTableItem* createItem(const std::string& key, std::string data);
     void push(const std::string& key, std::string data);
-    void get(const std::string& key);
+    std::string get(const std::string& key);
     void pop(const std::string& key);
-    ~HashTable() {
-        clear();  // Освобождение памяти при удалении
-        delete[] items;
-    }
+    void clear();
+    void saveToFile(const std::string& filename);
+    void loadFromFile(const std::string& filename);
 };
 
-
-void HashTable::initialisation(HashTable& hash_table) { // инициализация и выделение памяти
-    hash_table.table = new HashNode* [SIZE]; // выделение памяти под массив указателей
-    for (int i = 0; i < SIZE; i++) {
-        hash_table.table[i] = nullptr; // инициализируем каждый элемент nullptr
+void HashTable::clear() {
+     for (int i = 0; i < SIZE; ++i) {
+        HashTableItem* current = items[i];
+        while (current != nullptr) {
+            HashTableItem* temp = current;
+            current = current->next;
+            delete temp; // Delete the current item
+        }
+        items[i] = nullptr; // Set the bucket to nullptr
     }
 }
 
@@ -88,7 +87,7 @@ void HashTable::push(const std::string& key, std::string data) {
     }
 }
 
-std::string HashTable::get(HashTable& hash_table, const std::string& value) {
+std::string HashTable::get(const std::string& value) {
     if (count == 0) { // Проверка на пустоту
         cout << "Table is empty" << endl;
         return "";
@@ -97,18 +96,17 @@ std::string HashTable::get(HashTable& hash_table, const std::string& value) {
     for (int i = 0; i < SIZE; i++) {
         HashTableItem* current = items[i];
         while (current != nullptr) {
-            if (current->data == value) {
+            if (current->key == value) {
                 return current->data;
             }
             current = current->next;
         }
         return "";
     }
+    return "";
 }
 
-
 void HashTable::pop(const std::string& key) { // Функция удаления
-
     if (count == 0) { // Если таблица пустая, ничего не делаем
         return;
     }
@@ -147,4 +145,44 @@ void HashTable::pop(const std::string& key) { // Функция удаления
         }
     }
     cout << "Такого элемента нет в таблице" << endl;
+}
+
+void HashTable::saveToFile(const std::string& filename) {
+    std::ofstream file(filename);
+    if (!file) {
+        std::cout << "Ошибка открытия файла: " << filename << std::endl;
+        return;
+    }
+
+    for (int i = 0; i < SIZE; ++i) {
+        HashTableItem* current = items[i];
+        while (current != nullptr) {
+            file << current->key << ":" << current->data << std::endl; // Save in "key:data" format
+            current = current->next;
+        }
+    }
+
+    file.close();
+}
+
+void HashTable::loadFromFile(const std::string& filename) {
+    std::ifstream file(filename);
+    if (!file) {
+        std::cout << "Ошибка открытия файла: " << filename << std::endl;
+        return;
+    }
+
+    clear();  // Clear the current hash table before loading new data
+    std::string line;
+
+    while (std::getline(file, line)) {
+        size_t separator = line.find(':');
+        if (separator != std::string::npos) {
+            std::string key = line.substr(0, separator);
+            std::string data = line.substr(separator + 1);
+            push(key, data); // Use push to add key and data to the hash table
+        }
+    }
+
+    file.close();
 }
