@@ -1,5 +1,4 @@
 #include "header.h"
-#include "node.h"
 
 #include "array.hpp"
 #include "double-linked-list.hpp"
@@ -9,7 +8,7 @@
 #include "stack.hpp"
 #include "tree.hpp"
 
-CustomArray customArray; // создание массива
+CustomArray customArray(10); // создание массива
 LinkedList linkedList; // создание односвзяного листа
 DoubleLinkedList doubleLinkedList; // создание двусвязного листа
 Queue queue; // создание очереди
@@ -126,7 +125,7 @@ void processQuery(const std::string& query) {
         ss >> key;
         hash_table.pop(key);
     }
-    else if (command == "HGET"){ // Получение значения по ключу  дурка нихрена не выводит 
+    else if (command == "HGET"){ // Получение значения по ключу
         std::string key;
         ss >> key;
         hash_table.get(key);

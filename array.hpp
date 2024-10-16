@@ -1,24 +1,14 @@
 #include "header.h"
 
-struct ArrayNode {
-    std::string data;
-    ArrayNode* next;
-    ArrayNode* prev;
-
-    ArrayNode(const std::string& value, ArrayNode* nextNode = nullptr, ArrayNode* prevNode = nullptr)
-        : data(value), next(nextNode), prev(prevNode) {}
-};
-
 struct CustomArray {
-    ArrayNode* head; // Указатель на голову списка
+    string* data; // Массив строк
     int size; // Текущий размер списка
     int capacity; // Максимальная вместимость массива
 
-    CustomArray() : head(nullptr), size(0), capacity(10) {
-        head = nullptr;
-    }
+    // Конструкторы
+    CustomArray(int max);
+    ~CustomArray();
 
-    void resize();
     void add(int index, std::string value);
     void addToTheEnd(std::string value);
     void get(int index);
@@ -30,40 +20,66 @@ struct CustomArray {
     void saveToFile(const std::string& filename);
 };
 
-void CustomArray::resize() {
-    capacity *= 2; // Увеличиваем максимальный размер в 2 раза
+CustomArray::CustomArray(int capacity) : capacity(capacity), size(0) {
+    data = new string[capacity];
 }
 
-void CustomArray::add(int index, std::string value) {
-    if (index < 0 || index > size) {
-        std::cout << "Невозможно добавить элемент. Ошибка индекса." << std::endl;
+CustomArray::~CustomArray() {
+    delete[] data; // Освобождаем память при уничтожении объекта
+}
+
+void CustomArray::add(int index, string value) {
+    if (index < 0 || index > size || size >= capacity) {
+        cout << "Index invalid or array is full" << endl;
         return;
     }
-
-    ArrayNode* newNode = new ArrayNode(value); // Создаем новый узел с указанным значением
-    if (index == 0) { // Если индекс нулевой, то новый узел = голова списка
-        newNode->next = head;
-        if (head != nullptr) {
-            head->prev = newNode;
-        }
-        head = newNode;
-    } else {
-        ArrayNode* current = head;
-        for (int i = 0; i < index - 1; i++) { // Проходимся до указанного индекса
-            current = current->next;
-        }
-        newNode->next = current->next; // Вставляем новый узел
-        newNode->prev = current; // Устанавливаем указатель на предыдущий узел
-        if (current->next != nullptr) {
-            current->next->prev = newNode; // Обновляем указатель у следующего узла
-        }
-        current->next = newNode;
+    // Сдвигаем элементы вправо начиная с указанного индекса
+    for (int i = size; i > index; i--) {
+        data[i] = data[i - 1];
     }
+    data[index] = value; // Вставляем элемент
     size++;
 }
 
-void CustomArray::addToTheEnd(std::string value) {
-    add(size, value); // Текущий размер массива, чтобы добавить в конец
+void CustomArray::addToTheEnd(string value) {
+    if (size >= capacity) {
+        cout << "Array is full" << endl;
+        return;
+    }
+    data[size] = value; // Вставляем элемент в конец
+    size++;
+}
+
+void CustomArray::remove(int index) {
+    if (index < 0 || index >= size) {
+        cout << "Index invalid" << endl;
+        return;
+    }
+    // Сдвигаем элементы влево начиная с указанного индекса
+    for (int i = index; i < size - 1; i++) {
+        data[i] = data[i + 1];
+    }
+    size--;
+}
+
+void CustomArray::replace(int index, string value) {
+    if (index < 0 || index >= size) {
+        cout << "Index invalid" << endl;
+        return;
+    }
+    data[index] = value; // Замена элемента на заданном индексе
+}
+
+void CustomArray::display() {
+    for (int i = 0; i < size; i++) {
+        cout << data[i] << " ";
+    }
+    cout << endl;
+}
+
+void CustomArray::length() {
+    std::cout << "Size of the array is: " << size << endl;
+    return;
 }
 
 void CustomArray::get(int index) {
@@ -75,103 +91,32 @@ void CustomArray::get(int index) {
         std::cout << "Неверный индекс!" << std::endl;
         return;
     }
-    ArrayNode* current = head;
-    for (int i = 0; i < index; i++) { // Проходимся до нужного индекса
-        current = current->next;
-    }
-    std::cout << "Элемент по индексу " << index << ": " << current->data << std::endl;
+    std::cout << "Элемент по индексу " << index << ": " << data[index] << std::endl;
 }
 
-void CustomArray::remove(int index) {
-    if (size == 0) {
-        std::cout << "Массив пуст!" << std::endl;
+void CustomArray::saveToFile(const string& filename) {
+    ofstream outFile(filename);
+    if (!outFile.is_open()) {
+        cout << "Cannot open file for writing: " << filename << endl;
         return;
     }
-    if (index < 0 || index >= size) {
-        std::cout << "Неверный индекс!" << std::endl;
-        return;
+    for (int i = 0; i < size; i++) {
+        outFile << data[i] << endl;
     }
-
-    ArrayNode* toDelete = nullptr;
-    if (index == 0) { // Если индекс нулевой, удаляем голову
-        toDelete = head;
-        head = head->next;
-        if (head != nullptr) {
-            head->prev = nullptr; // Обновляем указатель на предыдущий узел
-        }
-    } else {
-        ArrayNode* current = head;
-        for (int i = 0; i < index - 1; i++) { // Находим узел перед удаляемым
-            current = current->next;
-        }
-        toDelete = current->next; // Сохраняем указатель на узел, который хотим удалить
-        if (toDelete->next != nullptr) {
-            toDelete->next->prev = current; // Обновляем указатель у следующего узла
-        }
-        current->next = toDelete->next; // Перенаправляем указатель на следующий
-    }
-    delete toDelete;
-    size--;
+    outFile.close();
 }
 
-void CustomArray::replace(int index, std::string value) {
-    if (size == 0) {
-        std::cout << "Массив пуст!" << std::endl;
+void CustomArray::loadFromFile(const string& filename) {
+    ifstream inFile(filename);
+    if (!inFile.is_open()) {
+        cout << "Cannot open file for reading: " << filename << endl;
         return;
     }
-    if (index < 0 || index >= size) {
-        std::cout << "Неверный индекс!" << std::endl;
-        return;
+    string line;
+    size = 0; // Очищаем массив перед загрузкой
+    while (getline(inFile, line) && size < capacity) {
+        data[size] = line;
+        size++;
     }
-    ArrayNode* current = head;
-    for (int i = 0; i < index; i++) {
-        current = current->next;
-    }
-    current->data = value;
-}
-
-void CustomArray::length() {
-    std::cout << "Длина массива: " << size << std::endl;
-}
-
-void CustomArray::display() {
-    if (size == 0) {
-        std::cout << "Массив пуст!" << std::endl;
-        return;
-    }
-    ArrayNode* current = head;
-    while (current) {
-        std::cout << current->data << " ";
-        current = current->next;
-    }
-    std::cout << std::endl;
-}
-
-void CustomArray::loadFromFile(const std::string& filename) {
-    std::ifstream file(filename);
-    if (!file) {
-        std::cout << "Ошибка открытия файла: " << filename << std::endl;
-        return;
-    }
-
-    std::string line;
-    while (std::getline(file, line)) {
-        addToTheEnd(line); // Добавляем в конец массива
-    }
-    file.close();
-}
-
-void CustomArray::saveToFile(const std::string& filename) {
-    std::ofstream file(filename);
-    if (!file) {
-        std::cout << "Ошибка открытия файла: " << filename << std::endl;
-        return;
-    }
-
-    ArrayNode* current = head;
-    while (current != nullptr) {
-        file << current->data << std::endl;
-        current = current->next;
-    }
-    file.close();
+    inFile.close();
 }
