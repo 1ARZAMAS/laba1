@@ -56,7 +56,7 @@ void processQuery(const std::string& query) {
     }
 
     // ----------DLLIST-------
-    else if (command == "DLPUSH_HEAD"){ // добавление элемента в голову
+    else if (command == "DLPUSH_HEAD"){ // добавление элемента в голову!!!!!!!!!!!!!!!!!!!!!!!!!!! убежище завершил мне программу после этой команды >:(
         std::string value;
         ss >> value;
         doubleLinkedList.addToTheHead(value);
@@ -143,7 +143,7 @@ void processQuery(const std::string& query) {
         stack.display();
     }
 
-    // ----------HASH-TABLE-------
+    // ----------HASH-TABLE------- ДОДЕЛАТЬ НАДО ЕТИТЬ КОЛОТИТЬ
     else if (command == "HPUSH"){ // Добавление элемента
         std::string key;
         std::string value;
@@ -162,25 +162,25 @@ void processQuery(const std::string& query) {
     }
 
     // ----------TREE-------
-    else if (command == "TPUSH"){
+    else if (command == "TPUSH"){ // Добавление элемента
         std::string value;
         ss >> value;
-        tree.root = tree.insert(tree.root, value); // Обновите корень после вставки
+        tree.root = tree.insert(tree.root, value); 
     }
-    else if (command == "TSEARCH"){
+    else if (command == "TSEARCH"){ // Поиск элемента по дереву
         std::string value;
         ss >> value;
-        cout << (tree.search(tree.root, value) ? "Found" : "Not Found") << endl; // Передайте корень
+        cout << (tree.search(tree.root, value) ? "Found" : "Not Found") << endl; 
     }
-    else if (command == "TPOP"){
+    else if (command == "TPOP"){ // удаление элемента
         std::string value;
         ss >> value;
-        tree.root = tree.remove(tree.root, value); // Обновите корень после удаления
+        tree.root = tree.remove(tree.root, value); 
     }
-    else if (command == "TREAD"){
-        tree.inOrder(tree.root); // Передайте корень
+    else if (command == "TREAD"){ // Вывод на экран!!!!!!!!!!!!!!!!!!!!!!!!! НАДО ИСПРАВИТЬ
+        tree.inOrder(tree.root); 
     } 
-    else if (command == "PRINT"){
+    else if (command == "PRINT"){ // вывод на экран всех структур
         customArray.display();
         doubleLinkedList.display();
         linkedList.display();

@@ -185,5 +185,5 @@ void DoubleLinkedList::saveToFile(const std::string& filename) { // сохран
         current = current->next;
     }
     file.close();
-    const_cast<DoubleLinkedList*>(this)->clear();
+    //const_cast<DoubleLinkedList*>(this)->clear();
 }

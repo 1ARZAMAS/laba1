@@ -54,7 +54,6 @@ void Stack::display(){
     if (top == nullptr){
         cout << "Stack is empty" << endl;
     } else {
-        cout << "Stack consists of the following elements: ";
         StackNode* current = top;
         while(current != nullptr){
             cout << current->data << " ";

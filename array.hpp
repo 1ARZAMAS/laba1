@@ -72,6 +72,7 @@ void CustomArray::replace(int index, string value) {
         return;
     }
     data[index] = value; // Замена элемента на заданном индексе
+    saveToFile("array.data"); // Сохраняем изменения в файл
 }
 
 void CustomArray::display() {

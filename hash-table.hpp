@@ -30,7 +30,7 @@ struct HashTable { // got bored, need to fix
     int HashFun(const std::string& key);
     HashTableItem* createItem(const std::string& key, std::string data);
     void push(const std::string& key, std::string data);
-    std::string get(const std::string& key);
+    void get(const std::string& key);
     void pop(const std::string& key);
     void clear();
     void saveToFile(const std::string& filename);
@@ -89,23 +89,24 @@ void HashTable::push(const std::string& key, std::string data) {
     saveToFile("hashtable.data"); // Сохраняем изменения в файл
 }
 
-std::string HashTable::get(const std::string& value) {
+void HashTable::get(const std::string& key) {
     if (count == 0) { // Проверка на пустоту
-        cout << "Table is empty" << endl;
-        return "";
+        std::cout << "Table is empty" << std::endl;
+        return;
     }
 
-    for (int i = 0; i < SIZE; i++) {
-        HashTableItem* current = items[i];
-        while (current != nullptr) {
-            if (current->key == value) {
-                return current->data;
-            }
-            current = current->next;
+    int index = HashFun(key);
+    HashTableItem* current = items[index];
+
+    while (current != nullptr) {
+        if (current->key == key) {
+            std::cout << "Element by key: " << current->key << " is: " << current->data << std::endl;
+            return; // Найден элемент, выходим из функции
         }
-        return "";
+        current = current->next; // Переход к следующему элементу в цепочке
     }
-    return "";
+
+    std::cout << "Key not found: " << key << std::endl; // Если ключ не найден
 }
 
 void HashTable::pop(const std::string& key) { // Функция удаления
