@@ -184,6 +184,8 @@ void AVLTree::inOrder(AVLNode* node) {// симметричный обход
         inOrder(node->left);
         cout << node->key << " ";
         inOrder(node->right);
+    } else {
+        cout << "AVL tree is empty" << endl;
     }
 }
 

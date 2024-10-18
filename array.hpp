@@ -75,10 +75,15 @@ void CustomArray::replace(int index, string value) {
 }
 
 void CustomArray::display() {
-    for (int i = 0; i < size; i++) {
+    if (int j = 0 == size) {
+        cout << "Array is empty" << endl;
+    } else {
+        for (int i = 0; i < size; i++) {
         cout << data[i] << " ";
     }
     cout << endl;
+    }
+    
 }
 
 void CustomArray::length() {

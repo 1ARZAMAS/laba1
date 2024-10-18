@@ -145,11 +145,16 @@ bool DoubleLinkedList::searchByValue(std::string value) {
 
 void DoubleLinkedList::display(){
     DLLNode* current = head;
-    while (current != nullptr) {
-        cout << current->data << " ";
-        current = current->next;
+    if (current == nullptr){
+        cout << "Doubly linked list is empty" << endl;
+    } else {
+        while (current != nullptr) {
+            cout << current->data << " ";
+            current = current->next;
+        }
+        cout << endl;
     }
-    cout << endl;
+    
 }
 
 void DoubleLinkedList::loadFromFile(const std::string& filename) { // загрузка данных из файла

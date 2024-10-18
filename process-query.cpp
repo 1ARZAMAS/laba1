@@ -180,6 +180,14 @@ void processQuery(const std::string& query) {
     else if (command == "TREAD"){
         tree.inOrder(tree.root); // Передайте корень
     } 
+    else if (command == "PRINT"){
+        customArray.display();
+        doubleLinkedList.display();
+        linkedList.display();
+        queue.display();
+        stack.display();
+        tree.inOrder(tree.root);
+    } 
     else {
         cout << "Unknown command" << endl;
     }

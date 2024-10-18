@@ -1,7 +1,6 @@
 #include "header.h"
 
 int main(int argc, char* argv[]) {
-    system("chcp 65001");
     std::string filename;
 
     // Обработка аргументов командной строки
@@ -16,7 +15,7 @@ int main(int argc, char* argv[]) {
 
     // Интерактивный ввод команд
     std::string query;
-    cout << "Введите команды (или 'exit' для выхода):" << endl;
+    cout << "Enter the command (ot 'exit' to exit):" << endl;
     while (true) {
         cout << "> ";
         getline(cin, query);

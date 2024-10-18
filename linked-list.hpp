@@ -114,11 +114,15 @@ void LinkedList::searchByValue(std::string value) {
 
 void LinkedList::display() {
     LLNode* current = head;
-    while (current != nullptr) {
-        std::cout << current->data << " ";
-        current = current->next;
+    if (current == nullptr){
+        cout << "Linked list is empty" << endl;
+    } else {
+        while (current != nullptr) {
+            std::cout << current->data << " ";
+            current = current->next;
+        }
+        std::cout << std::endl;
     }
-    std::cout << std::endl;
 }
 
 void LinkedList::saveToFile(const std::string& filename) {
