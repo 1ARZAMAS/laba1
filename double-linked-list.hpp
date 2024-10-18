@@ -57,7 +57,7 @@ void DoubleLinkedList::addToTheEnd(std::string value){
 
 void DoubleLinkedList::removeFromTheHead(){// удаление элемента с головы
     if (head == nullptr){
-        cout << "Удаление невозможно: список пустой" << endl;
+        cout << "Deletion is not possible: the list is empty" << endl;
         return;
     } else {
         DLLNode* temp = head;
@@ -69,7 +69,7 @@ void DoubleLinkedList::removeFromTheHead(){// удаление элемента 
 
 void DoubleLinkedList::removeFromTheEnd(){// удаление элемента с хвоста
     if (head == nullptr){
-        cout << "Удаление невозможно: список пустой" << endl;
+        cout << "Deletion is not possible: the list is empty" << endl;
         return;
     }
     if (head == tail){
@@ -87,7 +87,7 @@ void DoubleLinkedList::removeFromTheEnd(){// удаление элемента �
 
 void DoubleLinkedList::removeByValue(std::string value){ // удаление элемента по значению
     if (head == nullptr){
-        cout << "Невозможно удалить элемент: список пуст" << endl;
+        cout << "Deletion is not possible: the list is empty" << endl;
         return;
     }
     if (value == head->data){
@@ -105,7 +105,7 @@ void DoubleLinkedList::removeByValue(std::string value){ // удаление э�
         current = current->next;
     }
     if (current->next == nullptr){
-        cout << "Такого значения нет в списке" << endl;
+        cout << "This value is not in the list" << endl;
         return;
     }
 
@@ -127,12 +127,12 @@ bool DoubleLinkedList::searchByValue(std::string value) {
     DLLNode* current = head;
     while (current) {
         if (current->data == value) {
-            std::cout << "Значение " << current->data << " существует в списке" << std::endl;
+            std::cout << "Value " << current->data << " is in the list" << std::endl;
             return true;
         }
         current = current->next;
     }
-    std::cout << "Такого элемента " << value << " нет в списке" << std::endl;
+    std::cout << "There is no " << value << " in the list" << std::endl;
     return false;
 }
 
@@ -150,7 +150,7 @@ void DoubleLinkedList::loadFromFile(const std::string& filename) { // загру
     clear(); // очищаем текущий лист
     std::ifstream file(filename);
     if (!file) {
-        cout << "Ошибка открытия файла: " << filename << std::endl;
+        cout << "Cannot open file for reading: " << filename << std::endl;
         return;
     }
 
@@ -164,7 +164,7 @@ void DoubleLinkedList::loadFromFile(const std::string& filename) { // загру
 void DoubleLinkedList::saveToFile(const std::string& filename) { // сохранение в файл
     std::ofstream file(filename);
     if (!file) {
-        std::cout << "Ошибка открытия файла: " << filename << std::endl;
+        std::cout << "Cannot open file for writing: " << filename << std::endl;
         return;
     }
 

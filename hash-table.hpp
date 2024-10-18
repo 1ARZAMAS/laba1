@@ -144,13 +144,13 @@ void HashTable::pop(const std::string& key) { // Функция удаления
             }
         }
     }
-    cout << "Такого элемента нет в таблице" << endl;
+    cout << "This value is not in the table" << endl;
 }
 
 void HashTable::saveToFile(const std::string& filename) {
     std::ofstream file(filename);
     if (!file) {
-        std::cout << "Ошибка открытия файла: " << filename << std::endl;
+        std::cout << "Cannot open file for writing: " << filename << std::endl;
         return;
     }
 
@@ -168,7 +168,7 @@ void HashTable::saveToFile(const std::string& filename) {
 void HashTable::loadFromFile(const std::string& filename) {
     std::ifstream file(filename);
     if (!file) {
-        std::cout << "Ошибка открытия файла: " << filename << std::endl;
+        std::cout << "Cannot open file for reading: " << filename << std::endl;
         return;
     }
 

@@ -78,8 +78,7 @@ void CustomArray::display() {
 }
 
 void CustomArray::length() {
-    std::cout << "Size of the array is: " << size << endl;
-    return;
+    cout << "Size of the array is: " << size << endl;
 }
 
 void CustomArray::get(int index) {
@@ -88,10 +87,10 @@ void CustomArray::get(int index) {
         return;
     }
     if (index < 0 || index >= size) {
-        std::cout << "Неверный индекс!" << std::endl;
+        std::cout << "Index invalid" << std::endl;
         return;
     }
-    std::cout << "Элемент по индексу " << index << ": " << data[index] << std::endl;
+    std::cout << "Element by index " << index << ": " << data[index] << std::endl;
 }
 
 void CustomArray::saveToFile(const string& filename) {
