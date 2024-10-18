@@ -59,62 +59,62 @@ void processQuery(const std::string& query) {
     else if (command == "DLPUSH_HEAD"){ // добавление элемента в голову
         std::string value;
         ss >> value;
-        linkedList.addToTheHead(value);
+        doubleLinkedList.addToTheHead(value);
     }
     else if (command == "DLPUSH_TAIL"){ // добавление элемента в хвост
         std::string value;
         ss >> value;
-        linkedList.addToTheEnd(value);
+        doubleLinkedList.addToTheEnd(value);
     }
     else if (command == "DLPOP_HEAD"){ // удаление элемента с головы !!!!!!!!!!!!!!!!!!!!!!!!!!! убежище завершил мне программу после этой команды >:(
-        linkedList.removeFromTheHead();
+        doubleLinkedList.removeFromTheHead();
     }
     else if (command == "DLPOP_TAIL"){ // удаление элемента с хвоста
-        linkedList.removeFromTheEnd();
+        doubleLinkedList.removeFromTheEnd();
     }
     else if (command == "DLPOP_VALUE"){ // удаление элемента по значению
         std::string value;
         ss >> value;
-        linkedList.removeByValue(value);
+        doubleLinkedList.removeByValue(value);
     }
     else if (command == "DLSEARCH"){ // поиск элемента по значению
         std::string value;
         ss >> value;
-        linkedList.searchByValue(value);
+        doubleLinkedList.searchByValue(value);
     }
     else if (command == "DLREAD"){ // чтение
-        linkedList.display();
+        doubleLinkedList.display();
     }
 
     // ----------LIST-------
     else if (command == "LPUSH_HEAD"){ // добавление элемента в голову
         std::string value;
         ss >> value;
-        doubleLinkedList.addToTheHead(value);
+        linkedList.addToTheHead(value);
     }
     else if (command == "LPUSH_TAIL"){ // добавление элемента в хвост
         std::string value;
         ss >> value;
-        doubleLinkedList.addToTheEnd(value);
+        linkedList.addToTheEnd(value);
     }
     else if (command == "LPOP_HEAD"){ // удаление элемента с головы !!!!!!!!!!!!!!!!!!!!!!!!!!! убежище завершил мне программу после этой команды >:(
-        doubleLinkedList.removeFromTheHead();
+        linkedList.removeFromTheHead();
     }
     else if (command == "LPOP_TAIL"){ // удаление элемента с хвоста
-        doubleLinkedList.removeFromTheEnd();
+        linkedList.removeFromTheEnd();
     }
     else if (command == "LPOP_VALUE"){ // удаление элемента по значению
         std::string value;
         ss >> value;
-        doubleLinkedList.removeByValue(value);
+        linkedList.removeByValue(value);
     }
     else if (command == "LSEARCH"){ // поиск элемента по значению
         std::string value;
         ss >> value;
-        doubleLinkedList.searchByValue(value);
+        linkedList.searchByValue(value);
     }
     else if (command == "LREAD"){ // чтение
-        doubleLinkedList.display();
+        linkedList.display();
     }
 
     // ----------QUEUE-------
