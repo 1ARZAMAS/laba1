@@ -10,7 +10,9 @@ struct LLNode {
 struct LinkedList {
     LLNode* head;
 
-    LinkedList() : head(nullptr) {}
+    LinkedList() : head(nullptr) {
+        loadFromFile("linkedlist.data"); // Загружаем данные из файла при создании объекта
+    }
 
     void addToTheHead(std::string value);
     void addToTheEnd(std::string value);
@@ -27,6 +29,7 @@ void LinkedList::addToTheHead(std::string value) {
     LLNode* newNode = new LLNode(value);
     newNode->next = head;
     head = newNode;
+    saveToFile("linkedlist.data"); // Сохраняем после добавления
 }
 
 void LinkedList::addToTheEnd(std::string value) {
@@ -40,26 +43,29 @@ void LinkedList::addToTheEnd(std::string value) {
         }
         current->next = newNode;
     }
+    saveToFile("linkedlist.data"); // Сохраняем после добавления
 }
 
 void LinkedList::removeFromTheHead() {
     if (head == nullptr) {
-        std::cout << "Удаление невозможно: список пустой" << std::endl;
+        std::cout << "Deletion is not possible: the list is empty" << std::endl;
         return;
     }
     LLNode* temp = head;
     head = head->next;
     delete temp;
+    saveToFile("linkedlist.data"); // Сохраняем после добавления
 }
 
 void LinkedList::removeFromTheEnd() {
     if (head == nullptr) {
-        std::cout << "Удаление невозможно: список пустой" << std::endl;
+        std::cout << "Deletion is not possible: the list is empty" << std::endl;
         return;
     }
     if (head->next == nullptr) {
         delete head;
         head = nullptr;
+        saveToFile("linkedlist.data"); // Сохраняем после добавления
         return;
     }
     LLNode* current = head;
@@ -68,11 +74,12 @@ void LinkedList::removeFromTheEnd() {
     }
     delete current->next; // Удаляем последний узел
     current->next = nullptr; // Обнуляем указатель на последний элемент
+    saveToFile("linkedlist.data"); // Сохраняем после добавления
 }
 
 void LinkedList::removeByValue(std::string value) {
     if (head == nullptr) {
-        std::cout << "Невозможно удалить элемент: список пуст" << std::endl;
+        std::cout << "Deletion is not possible: the list is empty" << std::endl;
         return;
     }
     if (value == head->data) {
@@ -84,12 +91,13 @@ void LinkedList::removeByValue(std::string value) {
         current = current->next;
     }
     if (current->next == nullptr) {
-        std::cout << "Такого значения нет в списке" << std::endl;
+        std::cout << "This value is not in the list" << std::endl;
         return;
     }
     LLNode* temp = current->next;
     current->next = temp->next;
     delete temp;
+    saveToFile("linkedlist.data"); // Сохраняем после добавления
 }
 
 void LinkedList::searchByValue(std::string value) {
@@ -98,9 +106,9 @@ void LinkedList::searchByValue(std::string value) {
         current = current->next;
     }
     if (current != nullptr) {
-        std::cout << "Значение " << current->data << " существует в списке" << std::endl;
+        std::cout << "Value " << current->data << " is in the list" << std::endl;
     } else {
-        std::cout << "Такого элемента нет в списке" << std::endl;
+        std::cout << "There is no " << value << " in the list" << std::endl;
     }
 }
 
@@ -116,7 +124,7 @@ void LinkedList::display() {
 void LinkedList::saveToFile(const std::string& filename) {
     std::ofstream file(filename);
     if (!file) {
-        std::cout << "Ошибка открытия файла: " << filename << std::endl;
+        std::cout << "Cannot open file for writing: " << filename << std::endl;
         return;
     }
     LLNode* current = head;
@@ -129,7 +137,7 @@ void LinkedList::saveToFile(const std::string& filename) {
 void LinkedList::loadFromFile(const std::string& filename) {
     std::ifstream file(filename);
     if (!file) {
-        std::cout << "Ошибка открытия файла: " << filename << std::endl;
+        std::cout << "Cannot open file for reading: " << filename << std::endl;
         return;
     }
     std::string value;

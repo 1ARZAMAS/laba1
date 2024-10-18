@@ -12,7 +12,9 @@ struct AVLNode {
 struct AVLTree {
     AVLNode* root; // Указатель на корень дерева
 
-    AVLTree() : root(nullptr) {}
+    AVLTree() : root(nullptr) {
+        loadFromFile("AVLtree.data"); // Загрузка дерева из файла при создании
+    }
 
     void saveNode(AVLNode* node, std::ofstream& file);
     int height(AVLNode* node); // высота узла
@@ -119,7 +121,9 @@ AVLNode* AVLTree::insert(AVLNode* node, std::string key) {// вставляем 
     } else {
         return node; // дубликаты не допускаются
     }
-    return balance(node);
+    node = balance(node);
+    saveToFile("AVLtree.data"); // Сохранение после вставки
+    return node;
 }
 
 AVLNode* AVLTree::minValueNode(AVLNode* node) {// находим самый левый узел (минимальное значение)
@@ -143,10 +147,12 @@ AVLNode* AVLTree::remove(AVLNode* node, std::string key) {// удаляем уз
         if (!node->left) {
             AVLNode* temp = node->right; // если нет левого дочернего узла
             delete node; //удаляем текущий узел
+            saveToFile("AVLtree.data"); // Сохранение после удаления
             return temp; // возвращаем правое поддерево
         } else if (!node->right) {
             AVLNode* temp = node->left; // если нет правого дочернего узла
             delete node; // удаляем текущий узел
+            saveToFile("AVLtree.data"); // Сохранение после удаления
             return temp; // возвращаем левое поддерево
         }
         // узел с двумя дочерними узлами
@@ -154,7 +160,9 @@ AVLNode* AVLTree::remove(AVLNode* node, std::string key) {// удаляем уз
         node->key = temp->key; // копируем в текущий узел
         node->right = remove(node->right, temp->key); // удаляем минимальный узел в правом поддереве
     }
-    return balance(node); //балансируем
+    node = balance(node);
+    saveToFile("AVLtree.data"); // Сохранение после удаления
+    return node;
 }
 
 bool AVLTree::search(AVLNode* node, std::string key) {// проверяем есть ли узел в дереве с нужным значением
@@ -182,7 +190,7 @@ void AVLTree::inOrder(AVLNode* node) {// симметричный обход
 void AVLTree::saveToFile(const std::string& filename) {
     std::ofstream file(filename);
     if (!file) {
-        std::cout << "Ошибка открытия файла: " << filename << std::endl;
+        std::cout << "Cannot open file for writing: " << filename << std::endl;
         return;
     }
 
@@ -193,7 +201,7 @@ void AVLTree::saveToFile(const std::string& filename) {
 void AVLTree::loadFromFile(const std::string& filename) {
     std::ifstream file(filename);
     if (!file) {
-        std::cout << "Ошибка открытия файла: " << filename << std::endl;
+        std::cout << "Cannot open file for reading: " << filename << std::endl;
         return;
     }
 

@@ -13,7 +13,9 @@ struct DoubleLinkedList{ //done
     DLLNode* head;
     DLLNode* tail;
 
-    DoubleLinkedList() : head(nullptr), tail(nullptr) {}
+    DoubleLinkedList() : head(nullptr), tail(nullptr) {
+        loadFromFile("DLList.data"); // Загружаем данные из файла при создании объекта
+    }
 
     void addToTheHead(std::string value); // добавление элемента в голову
     void addToTheEnd(std::string value); // добавление элемента в хвост
@@ -42,6 +44,7 @@ void DoubleLinkedList::addToTheHead(std::string value){ // Добавление 
         head->prev = newNode;
         head = newNode;
     }
+    saveToFile("DLList.data"); // Сохраняем изменения в файл
 }
 
 void DoubleLinkedList::addToTheEnd(std::string value){
@@ -53,6 +56,7 @@ void DoubleLinkedList::addToTheEnd(std::string value){
         tail->next = newNode;
         tail = newNode;
     }
+    saveToFile("DLList.data"); // Сохраняем изменения в файл
 }
 
 void DoubleLinkedList::removeFromTheHead(){// удаление элемента с головы
@@ -65,6 +69,7 @@ void DoubleLinkedList::removeFromTheHead(){// удаление элемента 
         head = head->next;//удаляем первый элемент
         delete temp;
     }
+    saveToFile("DLList.data"); // Сохраняем изменения в файл
 }
 
 void DoubleLinkedList::removeFromTheEnd(){// удаление элемента с хвоста
@@ -83,6 +88,7 @@ void DoubleLinkedList::removeFromTheEnd(){// удаление элемента �
     tail->prev->next = nullptr;
     tail = tail->prev; // Удаляем последний элемент
     delete current;
+    saveToFile("DLList.data"); // Сохраняем изменения в файл
 }
 
 void DoubleLinkedList::removeByValue(std::string value){ // удаление элемента по значению
@@ -121,6 +127,7 @@ void DoubleLinkedList::removeByValue(std::string value){ // удаление э�
         tail = current->prev;
     }
     delete current; // и удаляем текущий
+    saveToFile("DLList.data"); // Сохраняем изменения в файл
 }
 
 bool DoubleLinkedList::searchByValue(std::string value) {
@@ -135,7 +142,6 @@ bool DoubleLinkedList::searchByValue(std::string value) {
     std::cout << "There is no " << value << " in the list" << std::endl;
     return false;
 }
-
 
 void DoubleLinkedList::display(){
     DLLNode* current = head;

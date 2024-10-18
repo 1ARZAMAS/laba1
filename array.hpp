@@ -22,6 +22,7 @@ struct CustomArray {
 
 CustomArray::CustomArray(int capacity) : capacity(capacity), size(0) {
     data = new string[capacity];
+    loadFromFile("array.data"); // Загружаем массив из файла при инициализации
 }
 
 CustomArray::~CustomArray() {
@@ -39,6 +40,7 @@ void CustomArray::add(int index, string value) {
     }
     data[index] = value; // Вставляем элемент
     size++;
+    saveToFile("array.data"); // Сохраняем изменения в файл
 }
 
 void CustomArray::addToTheEnd(string value) {
@@ -48,6 +50,7 @@ void CustomArray::addToTheEnd(string value) {
     }
     data[size] = value; // Вставляем элемент в конец
     size++;
+    saveToFile("array.data"); // Сохраняем изменения в файл
 }
 
 void CustomArray::remove(int index) {
@@ -60,6 +63,7 @@ void CustomArray::remove(int index) {
         data[i] = data[i + 1];
     }
     size--;
+    saveToFile("array.data"); // Сохраняем изменения в файл
 }
 
 void CustomArray::replace(int index, string value) {

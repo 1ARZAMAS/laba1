@@ -25,6 +25,7 @@ struct HashTable { // got bored, need to fix
         for (int i = 0; i < SIZE; i++) { // все элементы nullptr
             items[i] = nullptr;
         }
+        loadFromFile("hashtable.data"); // Загружаем данные из файла при создании
     }
     int HashFun(const std::string& key);
     HashTableItem* createItem(const std::string& key, std::string data);
@@ -85,6 +86,7 @@ void HashTable::push(const std::string& key, std::string data) {
             count++;
         }
     }
+    saveToFile("hashtable.data"); // Сохраняем изменения в файл
 }
 
 std::string HashTable::get(const std::string& value) {
@@ -120,6 +122,7 @@ void HashTable::pop(const std::string& key) { // Функция удаления
             delete items[index];
             items[index] = NULL;
             count--;
+            saveToFile("hashtable.data"); // Сохраняем изменения в файл
             return;
         }
         else {

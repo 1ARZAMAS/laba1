@@ -33,9 +33,8 @@ void processQuery(const std::string& query) {
         customArray.add(index, value);
     }
     else if (command == "APOP") { // удаление элемента по индексу
-        std::string arrayName;
         int index;
-        ss >> arrayName >> index;
+        ss >> index;
         customArray.remove(index);
     }
     else if (command == "AREPLACE") { // замена элемента по индексу
@@ -149,5 +148,8 @@ void processQuery(const std::string& query) {
     }
     else if (command == "TREAD"){
         tree.inOrder(tree.root); // Передайте корень
+    } 
+    else {
+        cout << "Unknown command" << endl;
     }
 }
