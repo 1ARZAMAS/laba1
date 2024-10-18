@@ -55,6 +55,37 @@ void processQuery(const std::string& query) {
         customArray.display();
     }
 
+    // ----------DLLIST-------
+    else if (command == "DLPUSH_HEAD"){ // добавление элемента в голову
+        std::string value;
+        ss >> value;
+        linkedList.addToTheHead(value);
+    }
+    else if (command == "DLPUSH_TAIL"){ // добавление элемента в хвост
+        std::string value;
+        ss >> value;
+        linkedList.addToTheEnd(value);
+    }
+    else if (command == "DLPOP_HEAD"){ // удаление элемента с головы !!!!!!!!!!!!!!!!!!!!!!!!!!! убежище завершил мне программу после этой команды >:(
+        linkedList.removeFromTheHead();
+    }
+    else if (command == "DLPOP_TAIL"){ // удаление элемента с хвоста
+        linkedList.removeFromTheEnd();
+    }
+    else if (command == "DLPOP_VALUE"){ // удаление элемента по значению
+        std::string value;
+        ss >> value;
+        linkedList.removeByValue(value);
+    }
+    else if (command == "DLSEARCH"){ // поиск элемента по значению
+        std::string value;
+        ss >> value;
+        linkedList.searchByValue(value);
+    }
+    else if (command == "DLREAD"){ // чтение
+        linkedList.display();
+    }
+
     // ----------LIST-------
     else if (command == "LPUSH_HEAD"){ // добавление элемента в голову
         std::string value;
