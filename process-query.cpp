@@ -177,8 +177,9 @@ void processQuery(const std::string& query) {
         ss >> value;
         tree.root = tree.remove(tree.root, value); 
     }
-    else if (command == "TREAD"){ // Вывод на экран!!!!!!!!!!!!!!!!!!!!!!!!! НАДО ИСПРАВИТЬ
-        tree.inOrder(tree.root); 
+    else if (command == "TREAD"){ // Вывод на экран
+        tree.inOrder(tree.root);
+        cout << endl;
     } 
     else if (command == "PRINT"){ // вывод на экран всех структур
         customArray.display();
@@ -187,6 +188,7 @@ void processQuery(const std::string& query) {
         queue.display();
         stack.display();
         tree.inOrder(tree.root);
+        cout << endl;
     } 
     else {
         cout << "Unknown command" << endl;

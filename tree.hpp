@@ -27,7 +27,8 @@ struct AVLTree {
     AVLNode* minValueNode(AVLNode* node); // находим самый левый узел (минимальное значение)
     AVLNode* remove(AVLNode* node, std::string key); // удаляем узел и балансируем
     bool search(AVLNode* node, std::string key); // проверяем есть ли узел в дереве с нужным значением
-    void inOrder(AVLNode* node); // симметричный обход
+    void inOrder(AVLNode* node);
+    void inOrder();
     void clear();
     void saveToFile(const std::string& filename);
     void loadFromFile(const std::string& filename);
@@ -147,12 +148,10 @@ AVLNode* AVLTree::remove(AVLNode* node, std::string key) {// удаляем уз
         if (!node->left) {
             AVLNode* temp = node->right; // если нет левого дочернего узла
             delete node; //удаляем текущий узел
-            saveToFile("AVLtree.data"); // Сохранение после удаления
             return temp; // возвращаем правое поддерево
         } else if (!node->right) {
             AVLNode* temp = node->left; // если нет правого дочернего узла
             delete node; // удаляем текущий узел
-            saveToFile("AVLtree.data"); // Сохранение после удаления
             return temp; // возвращаем левое поддерево
         }
         // узел с двумя дочерними узлами
@@ -179,13 +178,19 @@ bool AVLTree::search(AVLNode* node, std::string key) {// проверяем ес
     }
 }
 
-void AVLTree::inOrder(AVLNode* node) {// симметричный обход
+void AVLTree::inOrder(AVLNode* node) { // симметричный обход
     if (node) {
         inOrder(node->left);
-        cout << node->key << " ";
+        std::cout << node->key << " ";
         inOrder(node->right);
+    }
+}
+
+void AVLTree::inOrder() { // Новый метод без параметров
+    if (root) {
+        inOrder(root); // Вызываем обход, начиная с корня
     } else {
-        cout << "AVL tree is empty" << endl;
+        std::cout << "AVL tree is empty" << std::endl;
     }
 }
 
@@ -211,7 +216,7 @@ void AVLTree::loadFromFile(const std::string& filename) {
 
     std::string key;
     while (std::getline(file, key)) {
-        insert(root, key); // Вставляем каждый ключ в дерево
+        root = insert(root, key); // Нужно обновить корень после вставки
     }
 
     file.close();
