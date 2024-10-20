@@ -33,6 +33,8 @@ struct AVLTree {
     void saveToFile(const std::string& filename);
     void loadFromFile(const std::string& filename);
     
+    void insert(const std::string& key);
+    void remove(const std::string& key);
 };
 
 void AVLTree::clear() {
@@ -122,9 +124,13 @@ AVLNode* AVLTree::insert(AVLNode* node, std::string key) {// вставляем 
     } else {
         return node; // дубликаты не допускаются
     }
-    node = balance(node);
-    saveToFile("AVLtree.data"); // Сохранение после вставки
-    return node;
+    //return node;
+    return balance(node);
+}
+
+void AVLTree::insert(const std::string& key) {
+    root = insert(root, key); // Обновляем корень после вставки
+    saveToFile("AVLtree.data"); // Сохраняем состояние дерева
 }
 
 AVLNode* AVLTree::minValueNode(AVLNode* node) {// находим самый левый узел (минимальное значение)
@@ -159,9 +165,13 @@ AVLNode* AVLTree::remove(AVLNode* node, std::string key) {// удаляем уз
         node->key = temp->key; // копируем в текущий узел
         node->right = remove(node->right, temp->key); // удаляем минимальный узел в правом поддереве
     }
-    node = balance(node);
-    saveToFile("AVLtree.data"); // Сохранение после удаления
-    return node;
+    //return node;
+    return balance(node);
+}
+
+void AVLTree::remove(const std::string& key) {
+    root = remove(root, key); // Обновляем корень после удаления
+    saveToFile("AVLtree.data"); // Сохраняем состояние дерева
 }
 
 bool AVLTree::search(AVLNode* node, std::string key) {// проверяем есть ли узел в дереве с нужным значением
@@ -178,7 +188,7 @@ bool AVLTree::search(AVLNode* node, std::string key) {// проверяем ес
     }
 }
 
-void AVLTree::inOrder(AVLNode* node) { // симметричный обход
+void AVLTree::inOrder(AVLNode* node) { // симметричный обход для рекурсивного вывода
     if (node) {
         inOrder(node->left);
         std::cout << node->key << " ";
@@ -186,9 +196,9 @@ void AVLTree::inOrder(AVLNode* node) { // симметричный обход
     }
 }
 
-void AVLTree::inOrder() { // Новый метод без параметров
+void AVLTree::inOrder() { // симметричный обход без параметров
     if (root) {
-        inOrder(root); // Вызываем обход, начиная с корня
+        inOrder(root); // вызываем обход, начиная с корня
     } else {
         std::cout << "AVL tree is empty" << std::endl;
     }
@@ -201,7 +211,7 @@ void AVLTree::saveToFile(const std::string& filename) {
         return;
     }
 
-    saveNode(root, file); // Начинаем с корня дерева
+    saveNode(root, file); // начинаем с корня дерева
     file.close();
 }
 
@@ -212,11 +222,11 @@ void AVLTree::loadFromFile(const std::string& filename) {
         return;
     }
 
-    clear(); // Очищаем текущее дерево перед загрузкой
+    clear(); // очищаем текущее дерево перед загрузкой
 
     std::string key;
     while (std::getline(file, key)) {
-        root = insert(root, key); // Нужно обновить корень после вставки
+        root = insert(root, key); // обновляем корень
     }
 
     file.close();

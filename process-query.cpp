@@ -165,7 +165,8 @@ void processQuery(const std::string& query) {
     else if (command == "TPUSH"){ // Добавление элемента
         std::string value;
         ss >> value;
-        tree.root = tree.insert(tree.root, value); 
+        //tree.root = tree.insert(tree.root, value); 
+        tree.insert(value); 
     }
     else if (command == "TSEARCH"){ // Поиск элемента по дереву
         std::string value;
@@ -175,7 +176,8 @@ void processQuery(const std::string& query) {
     else if (command == "TPOP"){ // удаление элемента
         std::string value;
         ss >> value;
-        tree.root = tree.remove(tree.root, value); 
+        //tree.root = tree.remove(tree.root, value); 
+        tree.remove(value); 
     }
     else if (command == "TREAD"){ // Вывод на экран
         tree.inOrder(tree.root);
