@@ -9,24 +9,24 @@ struct CustomArray {
     CustomArray(int max);
     ~CustomArray();
 
-    void add(int index, std::string value);
-    void addToTheEnd(std::string value);
-    void get(int index);
-    void remove(int index);
-    void replace(int index, std::string value);
-    void length();
-    void display();
+    void add(int index, std::string value); // добавление
+    void addToTheEnd(std::string value); // добавить в конец
+    void get(int index); // получение по индексу
+    void remove(int index); // удаление
+    void replace(int index, std::string value); // замена
+    void length(); // длина
+    void display(); // вывод на экран
     void loadFromFile(const std::string& filename);
     void saveToFile(const std::string& filename);
 };
 
 CustomArray::CustomArray(int capacity) : capacity(capacity), size(0) {
     data = new string[capacity];
-    loadFromFile("array.data"); // Загружаем массив из файла при инициализации
+    loadFromFile("array.data"); // загружаем массив из файла при инициализации
 }
 
 CustomArray::~CustomArray() {
-    delete[] data; // Освобождаем память при уничтожении объекта
+    delete[] data; // освобождаем память
 }
 
 void CustomArray::add(int index, string value) {
@@ -34,13 +34,13 @@ void CustomArray::add(int index, string value) {
         cout << "Index invalid or array is full" << endl;
         return;
     }
-    // Сдвигаем элементы вправо начиная с указанного индекса
+    // сдвигаем элементы вправо
     for (int i = size; i > index; i--) {
         data[i] = data[i - 1];
     }
-    data[index] = value; // Вставляем элемент
+    data[index] = value; // вставляем элемент
     size++;
-    saveToFile("array.data"); // Сохраняем изменения в файл
+    saveToFile("array.data"); // сохраняем изменения в файл
 }
 
 void CustomArray::addToTheEnd(string value) {
@@ -48,9 +48,9 @@ void CustomArray::addToTheEnd(string value) {
         cout << "Array is full" << endl;
         return;
     }
-    data[size] = value; // Вставляем элемент в конец
+    data[size] = value; // вставляем элемент в конец
     size++;
-    saveToFile("array.data"); // Сохраняем изменения в файл
+    saveToFile("array.data"); // сохраняем изменения в файл
 }
 
 void CustomArray::remove(int index) {
@@ -58,12 +58,12 @@ void CustomArray::remove(int index) {
         cout << "Index invalid" << endl;
         return;
     }
-    // Сдвигаем элементы влево начиная с указанного индекса
+    // сдвигаем элементы влево
     for (int i = index; i < size - 1; i++) {
         data[i] = data[i + 1];
     }
     size--;
-    saveToFile("array.data"); // Сохраняем изменения в файл
+    saveToFile("array.data"); // сохраняем изменения в файл
 }
 
 void CustomArray::replace(int index, string value) {
@@ -71,8 +71,8 @@ void CustomArray::replace(int index, string value) {
         cout << "Index invalid" << endl;
         return;
     }
-    data[index] = value; // Замена элемента на заданном индексе
-    saveToFile("array.data"); // Сохраняем изменения в файл
+    data[index] = value; // замена элемента
+    saveToFile("array.data"); // сохраняем изменения в файл
 }
 
 void CustomArray::display() {
@@ -122,7 +122,7 @@ void CustomArray::loadFromFile(const string& filename) {
         return;
     }
     string line;
-    size = 0; // Очищаем массив перед загрузкой
+    size = 0; // очищаем массив перед загрузкой
     while (getline(inFile, line) && size < capacity) {
         data[size] = line;
         size++;

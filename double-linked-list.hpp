@@ -14,7 +14,7 @@ struct DoubleLinkedList{ //done
     DLLNode* tail;
 
     DoubleLinkedList() : head(nullptr), tail(nullptr) {
-        loadFromFile("DLList.data"); // Загружаем данные из файла при создании объекта
+        loadFromFile("DLList.data"); // загружаем данные из файла при создании объекта
     }
 
     void addToTheHead(std::string value); // добавление элемента в голову
@@ -35,7 +35,7 @@ void DoubleLinkedList::clear() {
     }
 }
 
-void DoubleLinkedList::addToTheHead(std::string value){ // Добавление в самое начало
+void DoubleLinkedList::addToTheHead(std::string value){ // добавление в самое начало
     DLLNode* newNode = new DLLNode(value);
     if (head == nullptr){
         head = tail = newNode;
@@ -44,7 +44,7 @@ void DoubleLinkedList::addToTheHead(std::string value){ // Добавление 
         head->prev = newNode;
         head = newNode;
     }
-    saveToFile("DLList.data"); // Сохраняем изменения в файл
+    saveToFile("DLList.data"); // сохраняем изменения в файл
 }
 
 void DoubleLinkedList::addToTheEnd(std::string value){
@@ -56,7 +56,7 @@ void DoubleLinkedList::addToTheEnd(std::string value){
         tail->next = newNode;
         tail = newNode;
     }
-    saveToFile("DLList.data"); // Сохраняем изменения в файл
+    saveToFile("DLList.data"); // сохраняем изменения в файл
 }
 
 void DoubleLinkedList::removeFromTheHead(){// удаление элемента с головы
@@ -66,13 +66,13 @@ void DoubleLinkedList::removeFromTheHead(){// удаление элемента 
     } else {
         DLLNode* temp = head;
         head->next->prev = nullptr;
-        head = head->next;//удаляем первый элемент
+        head = head->next; //удаляем первый элемент
         delete temp;
     }
     saveToFile("DLList.data"); // Сохраняем изменения в файл
 }
 
-void DoubleLinkedList::removeFromTheEnd(){// удаление элемента с хвоста
+void DoubleLinkedList::removeFromTheEnd(){ // удаление элемента с хвоста
     if (head == nullptr){
         cout << "Deletion is not possible: the list is empty" << endl;
         return;
@@ -86,9 +86,9 @@ void DoubleLinkedList::removeFromTheEnd(){// удаление элемента �
     
     DLLNode* current = tail;
     tail->prev->next = nullptr;
-    tail = tail->prev; // Удаляем последний элемент
+    tail = tail->prev; // удаляем последний элемент
     delete current;
-    saveToFile("DLList.data"); // Сохраняем изменения в файл
+    saveToFile("DLList.data"); // сохраняем изменения в файл
 }
 
 void DoubleLinkedList::removeByValue(std::string value){ // удаление элемента по значению
@@ -106,7 +106,7 @@ void DoubleLinkedList::removeByValue(std::string value){ // удаление э�
     }
     
     DLLNode* current = head;
-    while (current->next && current->next->data != value){ // Пока вообще можем идти по списку
+    while (current->next && current->next->data != value){ // пока вообще можем идти по списку
     // и пока значение не будет равно нужному
         current = current->next;
     }

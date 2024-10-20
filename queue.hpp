@@ -31,7 +31,7 @@ void Queue::push(std::string value){
         tail->next = newNode; //устанавливаем указатель текущего хвоста на новый узел
         tail = newNode;
     }
-    saveToFile("queue.data"); // Сохраняем состояние очереди после добавления
+    saveToFile("queue.data"); // сохраняем состояние очереди после добавления
 }
 
 void Queue::pop(){
@@ -44,7 +44,7 @@ void Queue::pop(){
         if (head == nullptr){ //если очередь пуста, то голова и конец = nullptr
             tail = nullptr;
         }
-        saveToFile("queue.data"); // Сохраняем состояние очереди после добавления
+        saveToFile("queue.data"); // сохраняем состояние очереди после добавления
     }
 }
     

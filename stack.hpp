@@ -43,9 +43,9 @@ void Stack::pop(){
     if (top == nullptr){
         cout << "Stack is empty, value cannot be deleted" << endl;
     } else {
-        StackNode* temp = top;
-        top = top->next;
-        delete temp;
+        StackNode* temp = top; // новая переменная, которая указывает на топ
+        top = top->next; // перезаписываем
+        delete temp; // и удаляем перменную
         saveToFile("stack.data"); // Сохраняем состояние стека после добавления
     }
 }

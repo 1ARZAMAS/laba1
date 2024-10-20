@@ -11,13 +11,13 @@ struct HashNode {
 
 const int SIZE = 500;
 
-struct HashTableItem { // got bored, need to fix
+struct HashTableItem {
     std::string key;
     std::string data;
-    HashTableItem* next; // Указатель на следующий элемент в цепочке
+    HashTableItem* next; // указатель на следующий элемент в цепочке
 };
 
-struct HashTable { // got bored, need to fix
+struct HashTable {
     HashTableItem* items[SIZE];
     int count;
 
@@ -25,7 +25,7 @@ struct HashTable { // got bored, need to fix
         for (int i = 0; i < SIZE; i++) { // все элементы nullptr
             items[i] = nullptr;
         }
-        loadFromFile("hashtable.data"); // Загружаем данные из файла при создании
+        loadFromFile("hashtable.data"); // загружаем данные из файла при создании
     }
     int HashFun(const std::string& key);
     HashTableItem* createItem(const std::string& key, std::string data);
@@ -43,9 +43,9 @@ void HashTable::clear() {
         while (current != nullptr) {
             HashTableItem* temp = current;
             current = current->next;
-            delete temp; // Delete the current item
+            delete temp; // удаляем текущий элемент 
         }
-        items[i] = nullptr; // Set the bucket to nullptr
+        items[i] = nullptr; // элемент теперь указывает на nullptr
     }
 }
 
@@ -78,19 +78,19 @@ void HashTable::push(const std::string& key, std::string data) {
     else {
         HashTableItem* current = items[index];
         if (current->key == key) {
-            current->data = data; // Обновляем существующий ключ
-            delete item; // Удаляем новый элемент, так как ключ уже существует
+            current->data = data; // обновляем существующий ключ
+            delete item; // удаляем новый элемент, так как ключ уже существует
         }
         else {
-            current->next = item; // Добавляем новый элемент в конец цепочки
+            current->next = item; // добавляем новый элемент в конец цепочки
             count++;
         }
     }
-    saveToFile("hashtable.data"); // Сохраняем изменения в файл
+    saveToFile("hashtable.data"); // сохраняем изменения в файл
 }
 
 void HashTable::get(const std::string& key) {
-    if (count == 0) { // Проверка на пустоту
+    if (count == 0) { // проверка на пустоту
         std::cout << "Table is empty" << std::endl;
         return;
     }
@@ -101,29 +101,29 @@ void HashTable::get(const std::string& key) {
     while (current != nullptr) {
         if (current->key == key) {
             std::cout << "Element by key: " << current->key << " is: " << current->data << std::endl;
-            return; // Найден элемент, выходим из функции
+            return; // найден элемент, выходим из функции
         }
-        current = current->next; // Переход к следующему элементу в цепочке
+        current = current->next; // переходим к следующему элементу
     }
 
-    std::cout << "Key not found: " << key << std::endl; // Если ключ не найден
+    std::cout << "Key not found: " << key << std::endl; // если ключ не найден
 }
 
-void HashTable::pop(const std::string& key) { // Функция удаления
-    if (count == 0) { // Если таблица пустая, ничего не делаем
+void HashTable::pop(const std::string& key) { // функция удаления
+    if (count == 0) { // если таблица пустая, ничего не делаем
         return;
     }
 
-    int index = HashFun(key); // Находим элемент по ключу
+    int index = HashFun(key); // находим элемент по ключу
     HashTableItem* item = items[index];
 
-    if (item != nullptr) { // Если элемент есть
+    if (item != nullptr) { // если элемент есть
 
-        if (item->key == key && item->next == NULL) { // Если ключ совпадает и это единственный элемент в списке
+        if (item->key == key && item->next == NULL) { // если ключ совпадает и это единственный элемент в списке
             delete items[index];
             items[index] = NULL;
             count--;
-            saveToFile("hashtable.data"); // Сохраняем изменения в файл
+            saveToFile("hashtable.data"); // сохраняем изменения в файл
             return;
         }
         else {
@@ -161,7 +161,7 @@ void HashTable::saveToFile(const std::string& filename) {
     for (int i = 0; i < SIZE; ++i) {
         HashTableItem* current = items[i];
         while (current != nullptr) {
-            file << current->key << ":" << current->data << std::endl; // Save in "key:data" format
+            file << current->key << ":" << current->data << std::endl; // сохраняем в формате "ключ:значение"
             current = current->next;
         }
     }
@@ -176,7 +176,7 @@ void HashTable::loadFromFile(const std::string& filename) {
         return;
     }
 
-    clear();  // Clear the current hash table before loading new data
+    clear();  // Отчистим таблицу перед сохранением
     std::string line;
 
     while (std::getline(file, line)) {
@@ -184,7 +184,7 @@ void HashTable::loadFromFile(const std::string& filename) {
         if (separator != std::string::npos) {
             std::string key = line.substr(0, separator);
             std::string data = line.substr(separator + 1);
-            push(key, data); // Use push to add key and data to the hash table
+            push(key, data); // добавим в хеш таблицу ключ и значение
         }
     }
 
