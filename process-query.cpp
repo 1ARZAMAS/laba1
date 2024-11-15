@@ -150,7 +150,7 @@ void processQuery(const std::string& query) {
         ss >> key >> value;
         hash_table.push(key, value);
     }
-    else if (command == "HPOP"){ // Удаление элемента
+    else if (command == "HPOP"){ // Удаление элемента по ключу
         std::string key;
         ss >> key;
         hash_table.pop(key);
