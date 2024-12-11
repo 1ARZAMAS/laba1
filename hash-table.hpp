@@ -77,13 +77,15 @@ void HashTable::push(const std::string& key, std::string data) {
     }
     else {
         HashTableItem* current = items[index];
-        if (current->key == key) {
+        while (current != nullptr){
+            if (current->key == key) {
             current->data = data; // обновляем существующий ключ
             delete item; // удаляем новый элемент, так как ключ уже существует
-        }
-        else {
-            current->next = item; // добавляем новый элемент в конец цепочки
-            count++;
+            }
+            else {
+                current->next = item; // добавляем новый элемент в конец цепочки
+                count++;
+            }
         }
     }
     saveToFile("hashtable.data"); // сохраняем изменения в файл
